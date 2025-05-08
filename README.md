@@ -82,8 +82,8 @@ scan.taskMultiline = true
 scan.multiStart = "///B3T-TODO:"
 scan.multiEnd = "*///"
 # Priorities configuration
-priorities = [HIGH, MED, LOW, CRIT] #2, 3, 4, 1
-priorities.level [2, 3, 4, 1] # Just write it in same order
+priorities = [ "HIGH", "MED", "LOW", "CRIT", ] #2, 3, 4, 1
+priorities.order = [ 2, 3, 4, 1 ] # Just write it in same order
 priorities.smallToBig = true # if false - will be from big to small.
 priorities.flag = "b3t.priority=" #It will find the keyword and set priority
 # And everything else... (more in docs)
