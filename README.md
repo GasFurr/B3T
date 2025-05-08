@@ -1,6 +1,6 @@
 # B3T: Better Todo Than (your) Todo
 
-_Lightweight, offline-first todo tracker for developers. Built with Zig._  
+_Lightweight, offline-first cli todo tracker for developers. Built with Zig._  
 No bloat, no cloud, just your tasks.
 
 [![Zig Version](https://img.shields.io/badge/Zig-0.14.0-%23ec7c0c)](https://ziglang.org)
