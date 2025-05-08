@@ -1,2 +1,11 @@
+# Ignoring everything without
+# file extension
+*
+!/**/
+!*.*
+# Ignoring cache and output
 .zig-cache/
 zig-out/
+# Ignoring release files
+*.tar.gz
+release/
