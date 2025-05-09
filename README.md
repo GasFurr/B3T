@@ -172,6 +172,7 @@ A: Not directly—by design. But you can version-control `.b3t` with Git if you 
 **Q: Why no GUI/plugins?**
 
 A: To stay minimal. Pipe `b3t list` to other tools if needed.
+
 (Or maybe someone one time will wrap `b3t` in some sort of gui/tui, i don't know really)
 
 **Q: What if I want more features?**
