@@ -22,7 +22,7 @@ pub fn build(b: *std.Build) void {
     exe.root_module.addImport("microwave", zig_toml_dep.module("microwave"));
 
     // Place binary in root folder
-    const install = b.addInstallArtifact(exe, .{ .dest_dir = .{ .override = .{ .custom = "../" } } });
+    const install = b.addInstallArtifact(exe, .{ .dest_dir = .{ .override = .{ .custom = "../resources/" } } });
 
     b.default_step.dependOn(&install.step);
     // Install it

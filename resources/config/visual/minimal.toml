@@ -1,0 +1,34 @@
+# todo: color support
+name = "minimal"
+header = false
+task = true
+number = true
+priority = true
+line = true
+
+[header] # Turned off, but still should be here.
+Prefix = ""
+Postfix = ""
+Capitalized = false
+
+[task]
+Prefix = ""
+Postfix = ""
+Capitalized = false
+
+[number]
+Prefix = ""
+Postfix = ". "
+BeforePriority = true
+
+[priority]
+Prefix = ""
+Postfix = " - " # No priority - no postfix)
+Capitalized = true # For better readability
+
+[line]
+Prefix = "- "
+Postfix = ""
+numberPrefix = ":"
+numberPostfix = ""
+numBeforeFile = false

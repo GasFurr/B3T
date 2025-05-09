@@ -1,12 +1,16 @@
-[path]
-# Only one thing you can set is path to settings.toml
-# directories
-path.dir.templates = "config/templates/" # templates directory
-path.dir.visual = "config/visual/" # skins directory
-path.dir.data = "data/" # Main data directory
-# defaults
-path.config.defaults = "config/default-init.toml" # defaults
-# data paths
-path.data.projects = "data/projects.toml" # projects database
-path.dir.projects = "data/projects/" # separate projects data
+[tools]
+init = "init" # Initialize
+list = "list" # List todos
+scan = "scan" # Scan codebase
+delete = "delete" # Delete list
+template = "template" # Templates sub
+templateSave = "save" # template save
+templateDelete = "deleteo" # template delete
 
+[path]
+templatesDir = "config/templates/"
+visualDir = "config/visual/"
+dataDir = "data/"
+defaultsConfig = "config/default-init.toml"
+projectsFile = "data/projects.toml"
+projectsDir = "data/projects/"

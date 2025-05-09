@@ -1,0 +1,36 @@
+name = "minimal" #Name of preset
+# Sections
+header = true
+task = true
+number = true
+priority = true
+line = true
+
+[header]
+Prefix = "|> " # Yes, you need to set all spaces beforehand.
+Postfix = " todo:" # Here too
+Capitalized = false # By default it just leaves it as is.
+# If true it will be "MY_AWESOME_APP"
+
+[task]
+Prefix = "| ► "
+Postfix = "" # Leave it blank i you want.
+Capitalized = false 
+# if ture it will be "FIX MEMORY LEAK"
+[number]
+Prefix = ""
+Postfix = "."
+BeforePriority = true # If false it would be [CRIT] 1.
+
+[priority]
+Prefix = "["
+Postfix = "] "
+Capitalized = false
+# if true it will be "[LOW]"
+[line]
+Prefix = "|   → "
+Postfix = ""
+numberPrefix = ":"
+numberPostfix = ""
+numBeforeFile = false
+

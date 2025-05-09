@@ -1,6 +1,6 @@
 const std = @import("std");
-const toml = @import("microwave");
-var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-const allocator = gpa.allocator();
+const microwave = @import("microwave");
 
-pub fn main() void {}
+fn main () !void {
+
+}
