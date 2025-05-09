@@ -73,16 +73,16 @@ B3T solves this with **local-first task management** and seamless codebase integ
 [project]
 
 name = "my_awesome_app"
-auto_scan = true  # Auto-detect TODOs on Scan
 
 [options]
 scan.taskName = "//B3T-TODO:" # Confugure parser
 # Priorities configuration
-priorities = [HIGH, MED, LOW, CRIT] #2, 3, 4, 1
-priorities.level [2, 3, 4, 1] # Just write it in same order
+priorities = [ "HIGH", "MED", "LOW", "CRIT"] #2, 3, 4, 1
+priorities.level = [2, 3, 4, 1] # Just write it in same order
 priorities.flag = "b3t.priority=" #It will find the keyword and set priority
-# And everything else... (more in docs)
+# Ignore configuration
 project.ignore = ["src/stolencode.rs", "src/privatelinks.txt"] # Will not read this files
+# And everything else... (more in docs)
 ```
 
 **2. Write Code with TODOs:**
