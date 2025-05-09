@@ -153,25 +153,29 @@ Check [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## ❓ FAQ
 
-**Q: Why Zig?**  
+**Q: Why Zig?**
+
 A: For raw speed and explicit control. And i just love this language, it's _the_ c but better as i see it.
 
 > I just feel like writing good software is best support for new programming language.
 
 **Q: How to add task manually?**
+
 A: It's not intended, but you can just create some sort of `todo.txt` and `b3t` will parse it.
 
 > It's design choice - b3t only believes in your codebase. It's the main purpose of b3t - scan code.
 
-**Q: Can I sync across devices?**  
+**Q: Can I sync across devices?**
+
 A: Not directly—by design. But you can version-control `.b3t` with Git if you want.
 
-**Made by developers, for developers.**
-**Q: Why no GUI/plugins?**  
+**Q: Why no GUI/plugins?**
+
 A: To stay minimal. Pipe `b3t list` to other tools if needed.
 (Or maybe someone one time will wrap `b3t` in some sort of gui/tui, i don't know really)
 
-**Q: What if I want more features?**  
+**Q: What if I want more features?**
+
 A: Keep an eye on [BetterB3T]() for plugins/SQLite. This version is intentionally barebones.
 
 ---
