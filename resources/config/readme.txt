@@ -16,7 +16,7 @@ settings.toml - File you need to have.
 b3t have to check it literally every time you bother it.
 Here stored all paths to your .todo, your data dir, templates dir, all paths.
 Here stored your current skin, default template, versioning data(you better not change it.)
-Here you can even configure your commands name, you can easily rename "b3t unload" to "b3t kill"
+Here you can even configure your commands name, you can easily rename "b3t delete" to "b3t kill"
 
 ---
 
@@ -30,7 +30,7 @@ This file lets you left your "priorities.smallToBig" untouched, making it true b
 
 templates - directory for all your templates (wow, everything really named self-explanatory)
 b3t checks this folder every time you run b3t init.
-It checks for new templates and copies here all templates you add with b3t save.
+It checks for new templates and copies here all templates you add with b3t template save.
 All templates (as all configs) are toml files.
 
 ---

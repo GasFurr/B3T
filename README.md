@@ -29,7 +29,7 @@ B3T solves this with **local-first task management** and seamless codebase integ
 - **🔎 Codebase-Aware**  
   Automatically find `//B3T-TODO` comments with `b3t scan`.
 - **📂 Template-Driven**  
-  Define projects via `todo.toml`. Reuse configs across projects.
+  Define projects via `b3t.toml`. Reuse configs across projects.
 - **🔒 Minimalist by Default**  
   No GUIs, no plugins, no distractions.
 
@@ -48,7 +48,7 @@ B3T solves this with **local-first task management** and seamless codebase integ
 2. **Init a Project**:
 
    ```bash
-   b3t init  # Creates todo.toml in your project
+   b3t init  # Creates b3t.toml in your project
    ```
 
 3. **Scan for TODOs**:
@@ -106,9 +106,9 @@ fn main() {
 ~ cd home/my_awesome_app
 # Go to your project root
 ~ b3t init my_awesome_app -t mytemplate
-# Creates todo.toml by your template (stored in program)
+# Creates b3t.toml by your template (stored in program)
 ~ b3t scan # When you in your projects root
-# Detects the comments using todo.toml configuration
+# Detects the comments using b3t.toml configuration
 ~ cd /home/.homework # Now you can do anything
 ~ b3t list my_awesome_app # Just ask for your project's List
 |> my_awesome_app todo:
@@ -143,7 +143,7 @@ fn main() {
 
 B3T is **open source** ([MIT](LICENSE)). We welcome:
 
-- **Templates**: Share `todo.toml` presets for frameworks.
+- **Templates**: Share `b3t.toml` presets for frameworks.
 - **Core Improvements**: Zig optimizations or bug fixes.
 - **Documentation**: Improve guides for advanced configs.
 
