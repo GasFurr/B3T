@@ -5,9 +5,9 @@
     .minimum_zig_version = "0.15.0-dev.471+369177f0b",
 
     .dependencies = .{
-        .zig_toml = .{
-            .url = "git+https://github.com/sam701/zig-toml#451fc7fb5ad302d3d83aeda234a8d15e792ca585",
-            .hash = "toml-0.0.0-bV14BfdxAQDXkZ5wL6eVO9zBz622SAdz_pcWuQmTAsMg",
+        .microwave = .{
+            .url = "https://github.com/edqx/microwave/archive/dc25a9ba890935f99d2f139caeec65ca00e5b6ca.tar.gz",
+            .hash = "microwave-1.0.0-e4c5GQewAQAl_4dBjs6W0ZEI5xGEC4DSfj4DR9T47VzG",
         },
     },
 
