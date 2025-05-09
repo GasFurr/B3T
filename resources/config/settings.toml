@@ -1,0 +1,12 @@
+[path]
+# Only one thing you can set is path to settings.toml
+# directories
+path.dir.templates = "config/templates/" # templates directory
+path.dir.visual = "config/visual/" # skins directory
+path.dir.data = "data/" # Main data directory
+# defaults
+path.config.defaults = "config/default-init.toml" # defaults
+# data paths
+path.data.projects = "data/projects.toml" # projects database
+path.dir.projects = "data/projects/" # separate projects data
+
