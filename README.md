@@ -161,6 +161,8 @@ A: For raw speed and explicit control. And i just love this language, it's _the_
 **Q: How to add task manually?**
 A: It's not intended, but you can just create some sort of `todo.txt` and `b3t` will parse it.
 
+> It's design choice - b3t only believes in your codebase. It's the main purpose of b3t - scan code.
+
 **Q: Can I sync across devices?**  
 A: Not directly—by design. But you can version-control `.b3t` with Git if you want.
 
