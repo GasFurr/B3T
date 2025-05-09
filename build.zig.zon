@@ -1,0 +1,15 @@
+.{
+    .name = .B3T,
+    .version = "0.1.0",
+    .fingerprint = 0x14327061f178b059,
+    .minimum_zig_version = "0.15.0-dev.471+369177f0b",
+
+    .dependencies = .{
+        .toml = .{
+            .url = "git+https://github.com/sam701/zig-toml#451fc7fb5ad302d3d83aeda234a8d15e792ca585",
+            .hash = "toml-0.0.0-bV14BfdxAQDXkZ5wL6eVO9zBz622SAdz_pcWuQmTAsMg",
+        },
+    },
+
+    .paths = .{ "build.zig", "build.zig.zon", "src", "LICENSE", "README.md", "resources/" },
+}

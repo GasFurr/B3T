@@ -32,35 +32,35 @@ pub fn build(b: *std.Build) void {
     });
 
     // Create release directory structure
-    const mkdir_release = b.addSystemCommand(&.{"mkdir"});
-    mkdir_release.addArgs(&.{ "-p", "release" });
+    // const mkdir_release = b.addSystemCommand(&.{"mkdir"});
+    // mkdir_release.addArgs(&.{ "-p", "release" });
 
     // Install binary to release directory
 
-    const install_release = b.addInstallArtifact(exe_release, .{ .dest_dir = .{ .override = .{ .custom = "../release" } } });
+    // const install_release = b.addInstallArtifact(exe_release, .{ .dest_dir = .{ .override = .{ .custom = "../release" } } });
 
     // Copy resources to release directory
-    const copy_resources = b.addSystemCommand(&.{"cp"});
-    copy_resources.addArgs(&.{ "-r", "resources/", "release/.todo" });
+    // const copy_resources = b.addSystemCommand(&.{"cp"});
+    // copy_resources.addArgs(&.{ "-r", "resources/", "release/.todo" });
 
     // Create archive of release directory
-    const create_archive = b.addSystemCommand(&.{
-        "tar",
-        "-czvf",
-        "b3t.tar.gz",
-        "release",
-    });
+    // const create_archive = b.addSystemCommand(&.{
+    //    "tar",
+    //    "-czvf",
+    //    "b3t.tar.gz",
+    //    "release",
+    //});
 
     // Set up dependencies
-    const release_step = b.step("release", "Create release package");
-    release_step.dependOn(&mkdir_release.step);
-    release_step.dependOn(&install_release.step);
-    release_step.dependOn(&copy_resources.step);
-    release_step.dependOn(&create_archive.step);
+    //const release_step = b.step("release", "Create release package");
+    //release_step.dependOn(&mkdir_release.step);
+    //release_step.dependOn(&install_release.step);
+    //release_step.dependOn(&copy_resources.step);
+    //release_step.dependOn(&create_archive.step);
 
     // Ensure proper execution order
-    install_release.step.dependOn(&mkdir_release.step);
-    copy_resources.step.dependOn(&mkdir_release.step);
-    create_archive.step.dependOn(&install_release.step);
-    create_archive.step.dependOn(&copy_resources.step);
+    //install_release.step.dependOn(&mkdir_release.step);
+    //copy_resources.step.dependOn(&mkdir_release.step);
+    //create_archive.step.dependOn(&install_release.step);
+    //create_archive.step.dependOn(&copy_resources.step);
 }
