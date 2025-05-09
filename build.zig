@@ -13,12 +13,13 @@ pub fn build(b: *std.Build) void {
     });
 
     // Add toml dependency.
-    const zig_toml_dep = b.dependency("microwave", .{}); // Match the .zon key name
+    const zig_toml_dep = b.dependency("microwave", .{
+        .target = target,
+        .optimize = optimize,
+    });
 
-    // Add its module using the correct name
-    exe.root_module.addImport("microwave", // Your preferred import name
-        zig_toml_dep.module("microwave") // Actual module name from the dependency
-    );
+    // Add its module using the
+    exe.root_module.addImport("microwave", zig_toml_dep.module("microwave"));
 
     // Place binary in root folder
     const install = b.addInstallArtifact(exe, .{ .dest_dir = .{ .override = .{ .custom = "../" } } });
