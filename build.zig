@@ -41,7 +41,7 @@ pub fn build(b: *std.Build) void {
 
     // Copy resources to release directory
     const copy_resources = b.addSystemCommand(&.{"cp"});
-    copy_resources.addArgs(&.{ "-r", "resources/", "release/config" });
+    copy_resources.addArgs(&.{ "-r", "resources/", "release/.todo" });
 
     // Create archive of release directory
     const create_archive = b.addSystemCommand(&.{
