@@ -171,7 +171,7 @@ A: For raw speed and explicit control. And i just love this language, it's _the_
 
 A: It's not intended, but you can just create some sort of `todo.txt` and `b3t` will parse it.
 
-> It's design choice - b3t only believes in your codebase as only true source.
+> It's design choice - b3t strictly believes in your codebase as only true source.
 
 **Q: Can I sync across devices?**
 
