@@ -151,6 +151,14 @@ Check [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 
+## 📜 License
+
+B3T is licensed under the [MIT License](LICENSE).
+
+This project uses [microwave](https://github.com/edqx/microwave) ([MIT License](https://github.com/edqx/microwave/blob/main/LICENSE)) for TOML parsing.
+
+---
+
 ## ❓ FAQ
 
 **Q: Why Zig?**
