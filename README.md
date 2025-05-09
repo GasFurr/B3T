@@ -75,7 +75,7 @@ B3T solves this with **local-first task management** and seamless codebase integ
 name = "my_awesome_app"
 
 [options]
-scan.taskName = "//B3T-TODO:" # Confugure parser
+scan.taskName = "//B3T-TODO:" # Configure parser
 # Priorities configuration
 priorities = [ "HIGH", "MED", "LOW", "CRIT"] #2, 3, 4, 1
 priorities.level = [2, 3, 4, 1] # Just write it in same order
@@ -108,9 +108,9 @@ fn main() {
 ~ b3t init my_awesome_app -t mytemplate
 # Creates b3t.toml by your template (stored in program)
 ~ b3t scan # When you in your projects root
-# Detects the comments using b3t.toml configuration
+# Detects the comments using b3t.toml configuration. (It scans all files if not said otherwise.)
 ~ cd /home/.homework # Now you can do anything
-~ b3t list my_awesome_app # Just ask for your project's List
+~ b3t list my_awesome_app # Just ask for your project's Todo list!
 |> my_awesome_app todo:
 | ► 1.[CRIT] Fix memory leak
 |   → src/main.rs:2
