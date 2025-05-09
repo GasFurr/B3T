@@ -5,31 +5,44 @@ pub fn build(b: *std.Build) void {
     const optimize = b.standardOptimizeOption(.{});
 
     // create executable binary target
-    const executable = b.addExecutable(.{
+    const exe = b.addExecutable(.{
         .name = "Game",
         .root_source_file = b.path("src/main.zig"),
         .target = target,
         .optimize = optimize,
     });
 
+    // Add toml dependency.
+    const zig_toml_dep = b.dependency("zig_toml", .{}); // Match the .zon key name
+
+    // Add its module using the correct name
+    exe.root_module.addImport("toml", // Your preferred import name
+        zig_toml_dep.module("zig-toml") // Actual module name from the dependency
+    );
+
     // Place binary in root folder
-    const install = b.addInstallArtifact(executable, .{ .dest_dir = .{ .override = .{ .custom = "../" } } });
+    const install = b.addInstallArtifact(exe, .{ .dest_dir = .{ .override = .{ .custom = "../" } } });
 
     b.default_step.dependOn(&install.step);
     // Install it
-    const run_cmd = b.addRunArtifact(executable);
+    const run_cmd = b.addRunArtifact(exe);
     run_cmd.step.dependOn(b.getInstallStep());
+
+    if (b.args) |args| {
+        run_cmd.addArgs(args);
+    }
+
     // Run it
     const run_step = b.step("run", "Run the app!");
     run_step.dependOn(&run_cmd.step);
 
     // Release package configuration
-    const exe_release = b.addExecutable(.{
-        .name = "Game",
-        .root_source_file = b.path("src/main.zig"),
-        .target = target,
-        .optimize = .ReleaseSafe,
-    });
+    //const exe_release = b.addExecutable(.{
+    //    .name = "b3t-bin",
+    //    .root_source_file = b.path("src/main.zig"),
+    //    .target = target,
+    //    .optimize = .ReleaseSafe,
+    //});
 
     // Create release directory structure
     // const mkdir_release = b.addSystemCommand(&.{"mkdir"});
