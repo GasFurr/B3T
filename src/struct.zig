@@ -1,75 +1,52 @@
 // All structures
 const std = @import("std");
 
+pub const init = struct {
+    config: []const u8,
+};
+
 // Configuration
 pub const Config = struct {
-    Tools: struct {
-        initCmd: []const u8,
-        listCmd: []const u8,
-        scanCmd: []const u8,
-        deleteCmd: []const u8,
-        Template: struct {
-            cmd: []const u8,
-            save: []const u8,
-            delete: []const u8,
-        },
-        Settings: struct {
-            enable: bool,
-            cmd: []const u8,
-            set: []const u8,
-            init: []const u8,
-            save: []const u8,
-        },
-        Project: struct {
-            cmd: []const u8,
-            delete: []const u8,
-            exprt: []const u8,
-        },
+    cmd: struct {
+        init: []const u8,
+        list: []const u8,
+        scan: []const u8,
+        help: []const u8,
+        remv: []const u8,
     },
-    Path: struct {
-        templatesDir: []const u8,
-        visualDir: []const u8,
-        dataDir: []const u8,
-        dataFile: []const u8,
-        defaultsConfig: []const u8,
-        projectsFile: []const u8,
-        projectsDir: []const u8,
+    dir: struct {
+        data: []const u8,
+        visual: []const u8,
+        templates: []const u8,
     },
-    Env: struct {
+    env: struct {
         skin: []const u8,
         template: []const u8,
     },
-    Project: struct {
-        initFile: []const u8,
-        autoBase: bool,
-        autoGitignore: bool,
+    project: struct {
+        init_file: []const u8,
+        scan_init: bool,
+        autoignore: bool,
     },
 };
 
 pub const Template = struct {
-    Project: struct {
+    template_name: []const u8,
+    project: struct {
         name: []const u8,
         ignore: ?[]const []const u8,
+        parse: []const u8,
     },
-    Scan: struct {
-        taskName: []const u8,
-        enableMultiline: bool,
-        multilineTask: ?[]const u8,
-        multilineEnd: ?[]const u8,
+    priorities: ?struct {
+        name: ?[]const []const u8,
+        level: ?[]const u32,
+        flag: ?[]const u8,
     },
-    Priorities: struct {
-        enable: bool,
-        name: []const []const u8,
-        level: []const u32,
-        flag: []const u8,
-        lowerToHigher: bool,
-    },
-    // In work
 };
 
 pub const Skin = struct {
     name: []const u8,
-    Sections: struct {
+    sections: struct {
         header: bool,
         task: bool,
         number: bool,
@@ -77,35 +54,35 @@ pub const Skin = struct {
         line: bool,
         separator: bool,
     },
-    Header: struct {
+    header: struct {
         separator: ?[]const u8,
         prefix: []const u8,
         postfix: []const u8,
         capitalized: bool,
     },
-    Task: struct {
+    task: struct {
         separator: ?[]const u8,
         prefix: []const u8,
         postfix: []const u8,
         capitalized: bool,
     },
-    Number: struct {
+    number: struct {
         separator: ?[]const u8,
         prefix: []const u8,
         postfix: []const u8,
-        beforePriority: bool,
+        before_priority: bool,
     },
-    Priority: struct {
+    priority: struct {
         prefix: []const u8,
         postfix: []const u8,
         capitalized: bool,
     },
-    Line: struct {
+    line: struct {
         separator: ?[]const u8,
         prefix: []const u8,
         postfix: []const u8,
-        numberPrefix: []const u8,
-        numberPostfix: []const u8,
-        numBeforeFile: bool,
+        number_prefix: []const u8,
+        number_postfix: []const u8,
+        num_before_file: bool = false,
     },
 };

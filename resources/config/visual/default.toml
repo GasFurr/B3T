@@ -1,6 +1,6 @@
 name = "default" #Name of preset
 
-[Sections]
+[sections]
 header = true
 task = true
 number = true
@@ -12,35 +12,37 @@ separator = false
 # ~+~+~+~+~+~+~+~+ or this.
 # in fact it may be anithing you can draw using letters.
 
-[Header]
+[header]
 separator = ""
 prefix = "|> " # Yes, you need to set all spaces beforehand.
 postfix = " todo:" # Here too
 capitalized = false # By default it just leaves it as is.
 # If true it will be "MY_AWESOME_APP"
 
-[Task]
+[task]
 separator = ""
 prefix = "| ► "
 postfix = "" # Leave it blank i you want.
 capitalized = false 
 # if ture it will be "FIX MEMORY LEAK"
-[Number]
+
+[mumber]
 separator = ""
 prefix = ""
 postfix = "."
-BeforePriority = true # If false it would be [CRIT] 1.
+before_priority = true # If false it would be [CRIT] 1.
 
-[Priority]
+[priority]
 prefix = "["
 postfix = "] "
 capitalized = false
 # if true it will be "[LOW]"
-[Line]
+
+[line]
 separator = ""
 prefix = "|   → "
 postfix = ""
-numberPrefix = ":"
-numberPostfix = ""
-numBeforeFile = false
+number_prefix = ":"
+number_postfix = ""
+num_before_file = false
 

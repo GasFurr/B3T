@@ -1,34 +1,23 @@
-[Tools]
-initCmd = "init" # Initialize
-listCmd = "list" # List todos
-scanCmd = "scan" # Scan codebase
-Template.cmd = "template" # Templates sub
-Template.save = "save" # template save
-Template.delete = "delete" # template delete
-Settings.enable = true # Enable settings cmd?
-Settings.cmd = "settings" # Settings cmd
-Settings.set = "set" # set field of this file
-Settings.init = "defaults" # set field if default-init
-Settings.save = "save" # creates backup of this file
-Project.cmd = "project" # project cmd
-Project.delete = "delete" # delete project data
-Project.exprt = "export" # exports project list as cmd
+[cmd]
+help = "help"
+init = "init"
+scan = "scan"
+list = "list"
+remv = "delete"
 
-[Path]
-templatesDir = "config/templates/"
-visualDir = "config/visual/"
-dataDir = "data/"
-dataFile = "data/data.toml"
-defaultsConfig = "config/default-init.toml"
-projectsFile = "data/projects.toml"
-projectsDir = "data/projects/"
+[dir]
+data = "~/.config/b3t/data/"
+visual = "~/.config/b3t/visual/"
+templates = "~/.config/b3t/templates/"
 
-[Env]
+[env]
 skin = "default"
 template = "default"
 
-[Project]
-initFile = "b3t.toml"
-autoBase = true # Place new projects in database?
-autoGitignore = false # Automatically add b3t init file to .gitignore
-
+[project]
+init_file = "b3t.toml"
+# project configuration file
+scan_init = false 
+# automatically init default project when scan new directory
+autoignore = false
+# automatically add b3t.toml to .gitignore

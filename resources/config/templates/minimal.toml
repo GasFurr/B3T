@@ -1,0 +1,5 @@
+template_name = "minimal"
+[project]
+name = "my_awesome_app"
+parse = "//todo:"
+

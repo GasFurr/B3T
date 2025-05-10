@@ -48,10 +48,10 @@ pub fn capitalize(allocator: Allocator, input: []const u8) ![]u8 {
 }
 
 // Returns absolute path to b3t root dir. Simple but useful.
-pub fn absolutePath(buffer: []u8) ![]u8 { //basically returns string
+pub fn absolutePath(buffer: []u8) ![]const u8 { //basically returns string
     // Needs buffer so we pass it from outside world.
-    const selfPath = try std.fs.selfExePath(&buffer); // Use buffer to write self exe path
-    const result = std.fs.path.dirname(selfPath) orelse return error.ExecutablePathInvalid;
+    const selfPath = try std.fs.selfExePath(buffer); // Use buffer to write self exe path
+    const result = std.fs.path.dirname(selfPath) orelse "";
     // then read dirname of selfPath.
     return result; // return
 }
