@@ -63,9 +63,9 @@ So, default skin you see.
 |> my_awesome_app todo:
 | ► 1.[CRIT] Fix memory leak
 |   → src/main.rs:2
-| ► 2.[MED] Multithreading support
+| ► 2.[med] Multithreading support
 |   → src/main.rs:6
-| ► 3.[LOW] Fix the typo in print
+| ► 3.[low] Fix the typo in print
 |   → src/main.rs:3
 | ► 4.[] someunpriorityzed todo
 |   → src/main.rs:4
@@ -76,15 +76,14 @@ So, default skin you see.
 minimal.toml - Just another pre-delivered skin for all you minimalistic lunatics.
 Just clean skin for you, with love (i use it too btw.)
 `
-  Project: my_awesome_app
-1.CRIT - Fix memory leak
-  src/main.rs:2
-2.MED - Multithreading support
-  src/main.rs:6
-3.LOW - Fix the typo in print
-  src/main.rs:3
-4. - someunpriorityzed todo
-  src/main.rs:4
+1. CRIT - Fix memory leak
+- src/main.rs:2
+2. MED - Multithreading support
+- src/main.rs:6
+3. LOW - Fix the typo in print
+- src/main.rs:3
+4. someunpriorityzed todo
+- src/main.rs:4
 `
 
 ---

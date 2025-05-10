@@ -1,0 +1,14 @@
+[Project]
+name = "my_awesome_app"
+ignore = [""] # optional
+
+[Scan]
+parse = "// todo:" # Configure parser
+multiline = false, # by default
+
+[Priorities]
+enable = true
+name = [ "low", "med", "high", "CRIT"] # 1, 2, 3, 4
+level = [1, 2, 3, 4] # Just write it in exact order
+flag = "b3t.priority=" #It will find the keyword and set priority
+lowerToHigher = true # By default from sort low to high numbers

@@ -1,34 +1,38 @@
 # todo: color support
 name = "minimal"
+[Sections]
 header = false
 task = true
 number = true
 priority = true
 line = true
+separator = false
+# You can even don't add separators to your skin
+# Just set this to false and don't add them.
 
-[header] # Turned off, but still should be here.
-Prefix = ""
-Postfix = ""
-Capitalized = false
+[Header] # Turned off, but still should be here.
+prefix = ""
+postfix = ""
+capitalized = false
 
-[task]
-Prefix = ""
-Postfix = ""
-Capitalized = false
+[Task]
+prefix = ""
+postfix = ""
+capitalized = false
 
-[number]
-Prefix = ""
-Postfix = ". "
-BeforePriority = true
+[Number]
+prefix = ""
+postfix = ". "
+beforePriority = true
 
-[priority]
-Prefix = ""
-Postfix = " - " # No priority - no postfix)
-Capitalized = true # For better readability
+[Priority]
+prefix = ""
+postfix = " - " # No priority - no postfix)
+capitalized = true # For better readability
 
-[line]
-Prefix = "- "
-Postfix = ""
+[Line]
+prefix = "- "
+postfix = ""
 numberPrefix = ":"
 numberPostfix = ""
 numBeforeFile = false
