@@ -3,7 +3,6 @@ const std = @import("std");
 // Pass allocator easier
 const Allocator = std.mem.Allocator;
 
-
 // Returns a slice of argument strings (allocated with the provided allocator)
 pub fn processArguments(allocator: std.mem.Allocator) ![][]const u8 {
     var args_iter = try std.process.argsWithAllocator(allocator);
@@ -24,7 +23,7 @@ pub fn processArguments(allocator: std.mem.Allocator) ![][]const u8 {
     return args_list.toOwnedSlice();
 }
 
-// Lowercases the string 
+// Lowercases the string
 pub fn minimize(allocator: Allocator, input: []const u8) ![]u8 {
     var result = try allocator.alloc(u8, input.len);
     for (input, 0..) |char, i| {
@@ -36,7 +35,7 @@ pub fn minimize(allocator: Allocator, input: []const u8) ![]u8 {
     return result;
 }
 
-// Uppercases the string 
+// Uppercases the string
 pub fn capitalize(allocator: Allocator, input: []const u8) ![]u8 {
     var result = try allocator.alloc(u8, input.len);
     for (input, 0..) |char, i| {
@@ -46,4 +45,13 @@ pub fn capitalize(allocator: Allocator, input: []const u8) ![]u8 {
         };
     }
     return result;
+}
+
+// Returns absolute path to b3t root dir. Simple but useful.
+pub fn absolutePath(buffer: []u8) ![]u8 { //basically returns string
+    // Needs buffer so we pass it from outside world.
+    const selfPath = try std.fs.selfExePath(&buffer); // Use buffer to write self exe path
+    const result = std.fs.path.dirname(selfPath) orelse return error.ExecutablePathInvalid;
+    // then read dirname of selfPath.
+    return result; // return
 }
