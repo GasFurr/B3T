@@ -1,11 +1,10 @@
 // Import files
 const std = @import("std");
 const util = @import("utils.zig");
+const configs = @import("struct.zig");
 const microwave = @import("microwave");
 // Shortcuts
-const comparestr = std.mem.eql;
-
-// Configuration:
+const print = std.debug.print;
 
 // Main function
 pub fn main() !void {
@@ -21,18 +20,30 @@ pub fn main() !void {
 
     // Validate argument count
     switch (args.len) {
-        1 => {},
-        2 => {},
-        3 => {
-            const command = args[0]; // e.g., "template"
-            const subcommand = args[1]; // e.g., "save"
-            const filename = args[2]; // e.g., "mytemplate.toml"
+        1 => {
+            //const arg = args[0];
 
-            if (comparestr(
-                u8,
-                command,
-            )) {}
         },
-        else => {},
+        2 => {
+            //const arg = args[0];
+            //const subcmd = args[1];
+
+        },
+        3 => {
+            //const arg = args[0];
+            //const subcmd = args[1];
+            //const value = args[2];
+
+        },
+        else => {
+            // Program don't have commands with more than 3 arguments.
+            print("Command {s} not found", .{args[0]});
+        },
     }
+
+    // Example usage with TOML parser (future integration)
+    print(
+        "Command: {s}, Subcommand: {s}, File: {s}\n",
+        .{ command, subcommand, filename },
+    );
 }
