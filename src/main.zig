@@ -76,7 +76,9 @@ pub fn main() !void {
                 try handlers.listHandler(value);
             } else if (cmp(u8, arg, cmd.help)) {
                 try handlers.helpHandler(configPath, value);
-            } else {}
+            } else {
+                print("Unknown command.\n b3t {s} to list commands", .{cmd.help});
+            }
         },
         else => try handlers.helpHandler(configPath, null),
     }

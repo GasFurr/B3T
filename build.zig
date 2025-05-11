@@ -9,7 +9,7 @@ pub fn build(b: *std.Build) void {
         .name = "b3t-bin",
         .root_source_file = b.path("src/main.zig"),
         .target = target,
-        .optimize = optimize,
+        .optimize = .ReleaseSmall,
     });
 
     // Add toml dependency.
