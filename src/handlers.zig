@@ -1,4 +1,5 @@
 const std = @import("std");
+const main = @import("main.zig"); // Just for colours, lol
 const tables = @import("struct.zig");
 const microwave = @import("microwave");
 
@@ -6,52 +7,65 @@ const print = std.debug.print;
 
 // 1 arg handlers:
 
-pub fn helpHandler(absPath: []const u8) !void {
+pub fn helpHandler(configPath: []const u8, arg: ?[]const u8) !void {
+    const compare = std.mem.eql;
+
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     defer _ = gpa.deinit();
-    // Setting up allocator up top of GPA.
     const allocator = gpa.allocator();
 
     // Constructing config path
-    const configPath = try std.fs.path.join(allocator, &[_][]const u8{
-        absPath,
-        "config",
-        "settings.toml",
-    });
-    defer allocator.free(configPath);
-
     const toml_content = try std.fs.cwd().readFileAlloc(allocator, configPath, 1_000_000);
     defer allocator.free(toml_content);
 
     const config = try microwave.Populate(tables.Config).createFromSlice(allocator, toml_content);
     defer config.deinit();
 
-    const cfg = config.value;
+    const help = config.value.cmd;
+    // const path = config.value.dir;
+    const proj = config.value.project;
+    // const env = config.value.project;
 
-    print("Absolute config path: \n{s}", .{configPath});
-    print("\nCommands:", .{});
-    print("{s} - Show this list\n", .{cfg.tools.help_cmd});
-    print("{s} - Scan project directory\n", .{cfg.tools.scan_cmd});
-    print("{s} (arg1: project_name) - Create project\n", .{cfg.tools.init_cmd});
-    print("{s} (arg1: project_name) - Show task list\n", .{cfg.tools.list_cmd});
-    print("Without arguments prints list of active projects", .{});
-    print("{s} (arg1: project_name) - delete project", .{cfg.tools.delete_cmd});
+    if (arg == null) {
+        print("\nCommands:\n", .{});
+        print("b3t {s}{s}{s} - Scan directory (b3t {s} {s} for more info)\n", .{ main.cyan, help.scan, main.reset, help.help, help.scan });
+        print("b3t {s}{s}{s} optional: [command] {s}- Show this list or explain the command\n", .{ main.cyan, help.help, main.yellow, main.reset });
+        print("b3t {s}{s}{s} required: [project name] {s}- Create project\n", .{ main.cyan, help.init, main.yellow, main.reset });
+        print("b3t {s}{s}{s} optional: [project name] {s}- Show task list\n", .{ main.cyan, help.list, main.yellow, main.reset });
+        print("b3t {s}{s}{s} required: [project name] {s]}- delete project\n", .{ main.cyan, help.remv, main.yellow, main.reset });
+    } else {
+        const unwrap = arg.?;
+
+        if (compare(u8, unwrap, help.help)) {
+            print("\nI thought it should be self-explainatory.", .{});
+            print("\n{s}b3t {s}{s} [command] {s}- show information about comand\n", .{ main.cyan, help.help, main.yellow, main.reset });
+        } else if (compare(u8, unwrap, help.scan)) {
+            print("\n{s}b3t {s} {s}- scans current directory for the project", .{ main.cyan, help.scan, main.reset });
+            print("\nif {s}{s}{s} project config found - scan according it", .{ main.yellow, proj.init_file, main.reset });
+            print("\nif {s}{s}{s} file not found - checks for scan_init rule", .{ main.yellow, proj.init_file, main.reset });
+            print("\nif scan_init = true it creates project with default config\n", .{});
+        } else if (compare(u8, unwrap, help.scan)) {} else {
+            return;
+        }
+    }
 }
 
 pub fn scanHandler() !void {}
 
-pub fn globalListHandler() !void {}
-
 // 2 arg handlers
 
-pub fn initHandler(name: []const u8) !void {
-    _ = name; // Do not hash!
+pub fn initHandler(name: ?[]const u8) !void {
+    _ = name;
 }
 
-pub fn listHandler(project: []const u8) !void {
-    _ = project; // Do not hash!
+pub fn listHandler(argument: ?[]const u8) !void {
+    _ = argument; // Do not hash!
+    // if argument == null just do project handling.
+    // if argument == settings list all settings.toml variables
 }
 
-pub fn deleteHandler(project: []const u8) !void {
-    _ = project; // Do not hash!
+pub fn deleteHandler(project: ?[]const u8) !void {
+    _ = project;
 }
+
+// help subcommands:

@@ -1,10 +1,6 @@
 // All structures
 const std = @import("std");
 
-pub const init = struct {
-    config: []const u8,
-};
-
 // Configuration
 pub const Config = struct {
     cmd: struct {
