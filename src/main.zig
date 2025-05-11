@@ -70,7 +70,7 @@ pub fn main() !void {
         0 => try handlers.helpHandler(configPath, null),
         1...2 => {
             const arg: []const u8 = args[0];
-            const value: ?[]const u8 = args[1];
+            const value: ?[]const u8 = if (args.len > 1) args[1] else null;
 
             if (cmp(u8, arg, cmd.list)) {
                 try handlers.listHandler(value);
