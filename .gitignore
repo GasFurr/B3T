@@ -9,3 +9,5 @@ zig-out/
 # Ignoring release files
 *.tar.gz
 release/
+b3t/
+
