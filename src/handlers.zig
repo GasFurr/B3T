@@ -51,6 +51,8 @@ pub fn helpHandler(configPath: []const u8, arg: ?[]const u8) !void {
         } else if (compare(u8, unwrap, help.init)) {
             print("\n{s}b3t {s}{s} [template] {s}- create new project using template.", .{ main.cyan, help.init, main.yellow, main.reset });
             print("\nWithout{s} [template] {s}argument uses default template (see settings.toml)\n", .{ main.yellow, main.reset });
+        } else if (compare(u8, unwrap, help.delete)) {
+            print("\n{s}b3t {s}{s} [project name] {s}- deletes the project.", .{ main.cyan, help.delete, main.yellow, main.reset });
         } else {
             return;
         }
