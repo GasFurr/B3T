@@ -53,6 +53,9 @@ pub fn helpHandler(configPath: []const u8, arg: ?[]const u8) !void {
             print("\nWithout{s} [template] {s}argument uses default template (see settings.toml)\n", .{ main.yellow, main.reset });
         } else if (compare(u8, unwrap, help.delete)) {
             print("\n{s}b3t {s}{s} [project name] {s}- deletes the project.\n", .{ main.cyan, help.delete, main.yellow, main.reset });
+        } else if (compare(u8, unwrap, help.rename)) {
+            print("\n{s}b3t {s}{s} [new name] {s}- renames current project.", .{ main.cyan, help.rename, main.yellow, main.reset });
+            print("\nYou should be in your project's directory using this command.", .{});
         } else {
             return;
         }
