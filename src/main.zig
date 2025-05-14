@@ -63,6 +63,7 @@ pub fn main() !void {
     const cmd = cfg.cmd;
     const cmp = std.mem.eql;
 
+    const dataPath = cfg.dir.data;
     // Now checking arguments
 
     // First - validate the number of arguments
@@ -73,11 +74,12 @@ pub fn main() !void {
             const value: ?[]const u8 = if (args.len > 1) args[1] else null;
 
             if (cmp(u8, arg, cmd.list)) {
-                try handlers.listHandler(value);
+                try handlers.listHandler(value, dataPath, configPath);
             } else if (cmp(u8, arg, cmd.help)) {
                 try handlers.helpHandler(configPath, value);
             } else {
-                print("Unknown command.\n b3t {s} to list commands", .{cmd.help});
+                print("Unknown command.", .{});
+                try handlers.helpHandler(configPath, null);
             }
         },
         else => try handlers.helpHandler(configPath, null),

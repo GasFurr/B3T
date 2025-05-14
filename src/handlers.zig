@@ -1,11 +1,12 @@
 const std = @import("std");
+const builtin = @import("builtin");
 const main = @import("main.zig"); // Just for colours, lol
 const tables = @import("struct.zig");
 const render = @import("render.zig"); // Render engine.
 const microwave = @import("microwave");
 
 const print = std.debug.print;
-
+const fs = std.fs;
 // 1 arg handlers:
 
 pub fn helpHandler(configPath: []const u8, arg: ?[]const u8) !void {
@@ -63,6 +64,7 @@ pub fn helpHandler(configPath: []const u8, arg: ?[]const u8) !void {
 }
 
 pub fn scanHandler() !void {
+    // check for init_scan setting.
     // Scans current directory according to b3t.toml
     // recursively reads all files inside of project dir.
     // parse all lines that starts with template's project.parse
@@ -71,17 +73,19 @@ pub fn scanHandler() !void {
 
 // 2 arg handlers
 
-pub fn initHandler(template: ?[]const u8) !void {
+pub fn initHandler(template: ?[]const u8, dataPath: []const u8) !void {
+    // checks for scan_init setting.
     // Creates two files:
     // b3t.toml
     // projectname.project
     // adds projectname_list and projectname_path to [projects] in data.toml.
     // reads template and writes it to b3t.toml
     _ = template;
+    _ = dataPath;
 }
 
-pub fn listHandler(argument: ?[]const u8) !void {
-    _ = argument;
+pub fn listHandler(argument: ?[]const u8, dataPath: []const u8, configPath: []const u8) !void {
+    _ = configPath;
     // if argument == null list all projects.
     // if argument == settings list all settings.toml variables
     // --- normal ---
@@ -91,19 +95,84 @@ pub fn listHandler(argument: ?[]const u8) !void {
     // --- null ---
     // just prints names of all avaliable .project files.
     // --- settings ---
-    // just print settings.toml contents.
+    // just print settings.toml contents ignoring all comments.
+
+    if (argument == null) {
+        var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+        const allocator = gpa.allocator();
+        defer _ = gpa.deinit();
+
+        const resolved_path = try resolveTildePath(allocator, dataPath);
+        defer allocator.free(resolved_path);
+
+        var dir = try fs.cwd().openDir(resolved_path, .{ .iterate = true });
+        defer dir.close();
+
+        var components = std.ArrayList([]const u8).init(allocator);
+        defer components.deinit();
+
+        print("Projects:\n", .{});
+        try listProjects(dir, &components, allocator);
+    }
 }
 
-pub fn deleteHandler(project: ?[]const u8) !void {
+pub fn deleteHandler(project: ?[]const u8, dataPath: []const u8) !void {
     // Read data.toml and try to find projectname_list
     // if project not found - say about it
     // if project found - read paths, delete files on this paths and then delete the paths from data.toml.
     _ = project;
+    _ = dataPath;
 }
 
-pub fn renameHandler() !void {
+pub fn renameHandler(dataPath: []const u8) !void {
     // Will ask for old project name and new project name.
     // then replace name fileds in old files and rename them.
     // then delete old projectname_list and projectname_path with new ones.
     // I don't really know how it will work.
+    _ = dataPath;
+}
+
+fn listProjects(dir: fs.Dir, components: *std.ArrayList([]const u8), allocator: std.mem.Allocator) !void {
+    var iter = dir.iterate();
+    const ext = ".project";
+    while (try iter.next()) |entry| {
+        if (entry.kind == .directory) {
+            // Recurse into subdirectories (but don't track components)
+            var subdir = try dir.openDir(entry.name, .{ .iterate = true });
+            defer subdir.close();
+            try listProjects(subdir, components, allocator);
+        } else {
+            // Check if the filename ends with ".project"
+            if (std.mem.endsWith(u8, entry.name, ext)) {
+                // Trim the ".project" extension from the filename
+                const basename = entry.name[0 .. entry.name.len - ext.len];
+                print("{s}\n", .{basename});
+            }
+        }
+    }
+}
+
+fn resolveTildePath(allocator: std.mem.Allocator, path: []const u8) ![]const u8 {
+    if (std.mem.startsWith(u8, path, "~/")) {
+        // Get home directory from environment
+        const home_dir = try getHomeDir(allocator);
+        defer allocator.free(home_dir);
+
+        // Join home directory with the rest of the path (after "~/")
+        return fs.path.join(allocator, &.{ home_dir, path[2..] });
+    } else if (std.mem.eql(u8, path, "~")) {
+        // Handle standalone "~"
+        return getHomeDir(allocator);
+    } else {
+        // Return the path as-is if no tilde is present
+        return allocator.dupe(u8, path);
+    }
+}
+
+fn getHomeDir(allocator: std.mem.Allocator) ![]const u8 {
+    const home_var = if (builtin.os.tag == .windows) "USERPROFILE" else "HOME";
+    return std.process.getEnvVarOwned(allocator, home_var) catch |err| {
+        std.log.err("Failed to read {s} environment variable: {s}", .{ home_var, @errorName(err) });
+        return error.HomeDirNotFound;
+    };
 }
