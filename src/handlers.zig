@@ -47,10 +47,10 @@ pub fn helpHandler(configPath: []const u8, arg: ?[]const u8) !void {
             print("\nif scan_init = true it creates project with default config\n", .{});
         } else if (compare(u8, unwrap, help.list)) {
             print("\n{s}b3t {s}{s} [project] {s}- prints todo-list for the project.", .{ main.cyan, help.list, main.yellow, main.reset });
-            print("\nWithout{s} [project] {s}argument prints list of projects", .{ main.yellow, main.reset });
+            print("\nWithout{s} [project] {s}argument prints list of projects\n", .{ main.yellow, main.reset });
         } else if (compare(u8, unwrap, help.init)) {
             print("\n{s}b3t {s}{s} [template] {s}- create new project using template.", .{ main.cyan, help.init, main.yellow, main.reset });
-            print("\nWithout{s} [template] {s}argument uses default template (see settings.toml)", .{ main.yellow, main.reset });
+            print("\nWithout{s} [template] {s}argument uses default template (see settings.toml)\n", .{ main.yellow, main.reset });
         } else {
             return;
         }
