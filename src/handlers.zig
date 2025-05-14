@@ -54,8 +54,7 @@ pub fn helpHandler(configPath: []const u8, arg: ?[]const u8) !void {
         } else if (compare(u8, unwrap, help.delete)) {
             print("\n{s}b3t {s}{s} [project name] {s}- deletes the project.\n", .{ main.cyan, help.delete, main.yellow, main.reset });
         } else if (compare(u8, unwrap, help.rename)) {
-            print("\n{s}b3t {s}{s} [new name] {s}- renames current project.", .{ main.cyan, help.rename, main.yellow, main.reset });
-            print("\nYou should be in your project's directory using this command.", .{});
+            print("\n{s}b3t {s}{s}- renames project.", .{ main.cyan, help.rename, main.reset });
         } else {
             return;
         }
@@ -80,4 +79,7 @@ pub fn deleteHandler(project: ?[]const u8) !void {
     _ = project;
 }
 
+pub fn renameHandler() !void {
+    // Will ask for old project name and new project name.
+}
 // help subcommands:
