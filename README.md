@@ -1,3 +1,7 @@
+# CURRENTLY WIP - ALL INFO DOWN HERE IS JUST IMAGE OF WHAT SOFTWARE SHOULD DO AT THE END OF DEVELOPMENT!
+
+# CURRENTLY NOT WORKING.
+
 # B3T: Better Todo Than (your) Todo
 
 _Lightweight, offline-first todo tracker for developers. Built with Zig._  
@@ -66,7 +70,7 @@ B3T solves this with **local-first task management** and seamless codebase integ
 ---
 
 ## 📝 Example Workflow
-
+(everything here is not working for now.)
 **1. Create your `mytemplate.toml`:**
 
 ```toml
