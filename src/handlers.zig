@@ -33,7 +33,7 @@ pub fn helpHandler(configPath: []const u8, arg: ?[]const u8) !void {
         print("b3t {s}{s}{s} optional: [template] {s}- Create project\n", .{ main.cyan, help.init, main.yellow, main.reset });
         print("b3t {s}{s}{s} optional: [project name] {s}- Show task list\n", .{ main.cyan, help.list, main.yellow, main.reset });
         print("b3t {s}{s}{s} required: [project name] {s}- delete project\n", .{ main.cyan, help.delete, main.yellow, main.reset });
-        print("b3t {s}{s}{s} required: [new name] {s} - rename project", .{ main.cyan, help.rename, main.yellow, main.reset });
+        print("b3t {s}{s}{s} required: [new name] {s} - rename project\n", .{ main.cyan, help.rename, main.yellow, main.reset });
     } else {
         const unwrap = arg.?;
 
