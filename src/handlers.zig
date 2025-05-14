@@ -28,12 +28,12 @@ pub fn helpHandler(configPath: []const u8, arg: ?[]const u8) !void {
 
     if (arg == null) {
         print("\nCommands:\n", .{});
-        print("b3t {s}{s}{s} - Scan directory (b3t {s} {s} for more info)\n", .{ main.cyan, help.scan, main.reset, help.help, help.scan });
-        print("b3t {s}{s}{s} optional: [command] {s}- Show this list or explain the command\n", .{ main.cyan, help.help, main.yellow, main.reset });
-        print("b3t {s}{s}{s} optional: [template] {s}- Create project\n", .{ main.cyan, help.init, main.yellow, main.reset });
-        print("b3t {s}{s}{s} optional: [project name] {s}- Show task list\n", .{ main.cyan, help.list, main.yellow, main.reset });
-        print("b3t {s}{s}{s} required: [project name] {s}- delete project\n", .{ main.cyan, help.delete, main.yellow, main.reset });
-        print("b3t {s}{s}{s} required: [new name] {s} - rename project\n", .{ main.cyan, help.rename, main.yellow, main.reset });
+        print("1.nb3t {s}{s}{s} - Scan directory (b3t {s} {s} for more info)\n", .{ main.cyan, help.scan, main.reset, help.help, help.scan });
+        print("2.b3t {s}{s}{s} optional: [command] {s}- Show this list or explain the command\n", .{ main.cyan, help.help, main.yellow, main.reset });
+        print("3.b3t {s}{s}{s} optional: [template] {s}- Create project\n", .{ main.cyan, help.init, main.yellow, main.reset });
+        print("4.b3t {s}{s}{s} optional: [project name] {s}- Show task list\n", .{ main.cyan, help.list, main.yellow, main.reset });
+        print("5.b3t {s}{s}{s} required: [project name] {s}- delete project\n", .{ main.cyan, help.delete, main.yellow, main.reset });
+        print("6.b3t {s}{s}{s} required: [new name] {s} - rename project\n", .{ main.cyan, help.rename, main.yellow, main.reset });
     } else {
         const unwrap = arg.?;
 
