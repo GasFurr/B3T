@@ -1,6 +1,7 @@
 const std = @import("std");
 const main = @import("main.zig"); // Just for colours, lol
 const tables = @import("struct.zig");
+const render = @import("render.zig"); // Render engine.
 const microwave = @import("microwave");
 
 const print = std.debug.print;
@@ -61,25 +62,48 @@ pub fn helpHandler(configPath: []const u8, arg: ?[]const u8) !void {
     }
 }
 
-pub fn scanHandler() !void {}
+pub fn scanHandler() !void {
+    // Scans current directory according to b3t.toml
+    // recursively reads all files inside of project dir.
+    // parse all lines that starts with template's project.parse
+    // writes data to projectname.project
+}
 
 // 2 arg handlers
 
-pub fn initHandler(name: ?[]const u8) !void {
-    _ = name;
+pub fn initHandler(template: ?[]const u8) !void {
+    // Creates two files:
+    // b3t.toml
+    // projectname.project
+    // adds projectname_list and projectname_path to [projects] in data.toml.
+    // reads template and writes it to b3t.toml
+    _ = template;
 }
 
 pub fn listHandler(argument: ?[]const u8) !void {
     _ = argument;
-    // if argument == null just do project handling.
+    // if argument == null list all projects.
     // if argument == settings list all settings.toml variables
+    // --- normal ---
+    // Check if there's projectname.list file
+    // if not - send projectname.project file to render engine
+    // Then just print contents of projectname.list
+    // --- null ---
+    // just prints names of all avaliable .project files.
+    // --- settings ---
+    // just print settings.toml contents.
 }
 
 pub fn deleteHandler(project: ?[]const u8) !void {
+    // Read data.toml and try to find projectname_list
+    // if project not found - say about it
+    // if project found - read paths, delete files on this paths and then delete the paths from data.toml.
     _ = project;
 }
 
 pub fn renameHandler() !void {
     // Will ask for old project name and new project name.
+    // then replace name fileds in old files and rename them.
+    // then delete old projectname_list and projectname_path with new ones.
+    // I don't really know how it will work.
 }
-// help subcommands:

@@ -20,5 +20,7 @@ init_file = "b3t.toml"
 # project configuration file
 scan_init = false 
 # automatically init default project when scan new directory
+init_scan = false
+# automatically scans new projects.
 autoignore = false
 # automatically add b3t.toml to .gitignore
