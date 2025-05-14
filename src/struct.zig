@@ -8,7 +8,8 @@ pub const Config = struct {
         list: []const u8,
         scan: []const u8,
         help: []const u8,
-        remv: []const u8,
+        delete: []const u8,
+        rename: []const u8,
     },
     dir: struct {
         data: []const u8,

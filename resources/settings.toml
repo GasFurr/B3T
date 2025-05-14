@@ -3,7 +3,8 @@ help = "help"
 init = "init"
 scan = "scan"
 list = "list"
-remv = "delete"
+delete = "delete"
+rename = "rename"
 
 [dir]
 data = "~/.config/b3t/data/"
