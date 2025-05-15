@@ -85,9 +85,10 @@ pub fn initHandler(template: ?[]const u8, dataPath: []const u8) !void {
 }
 
 pub fn listHandler(argument: ?[]const u8, dataPath: []const u8, configPath: []const u8) !void {
-    _ = configPath;
+    const unwrap = argument.?;
+
     // if argument == null list all projects.
-    // if argument == settings list all settings.toml variables
+    // if argument == config list all settings.toml variables
     // --- normal ---
     // Check if there's projectname.list file
     // if not - send projectname.project file to render engine
@@ -114,6 +115,22 @@ pub fn listHandler(argument: ?[]const u8, dataPath: []const u8, configPath: []co
         print("Projects:\n", .{});
         try listProjects(dir, &components, allocator);
     }
+    if (std.mem.eql(u8, unwrap, "config")) {
+        var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+        const allocator = gpa.allocator();
+        defer _ = gpa.deinit();
+
+        const resolvedPath = try resolveTildePath(allocator, configPath);
+        defer allocator.free(resolvedPath);
+
+        const config = try std.fs.openFileAbsolute(resolvedPath, .{ .mode = .read_only });
+        defer config.close();
+
+        const contents = try std.fs.File.readToEndAlloc(config, allocator, std.math.maxInt(usize));
+        defer allocator.free(contents);
+
+        print("{s}", .{contents});
+    } else {}
 }
 
 pub fn deleteHandler(project: ?[]const u8, dataPath: []const u8) !void {
