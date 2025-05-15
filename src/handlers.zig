@@ -154,7 +154,7 @@ fn listProjects(dir: fs.Dir, components: *std.ArrayList([]const u8), allocator: 
     const ext = ".project";
     while (try iter.next()) |entry| {
         if (entry.kind == .directory) {
-            // Recurse into subdirectories (but don't track components)
+            // Recurse into subdirectories
             var subdir = try dir.openDir(entry.name, .{ .iterate = true });
             defer subdir.close();
             try listProjects(subdir, components, allocator);
