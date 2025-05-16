@@ -123,13 +123,23 @@ pub fn listHandler(argument: ?[]const u8, dataPath: []const u8, configPath: []co
         const resolvedPath = try resolveTildePath(allocator, configPath);
         defer allocator.free(resolvedPath);
 
-        const config = try std.fs.openFileAbsolute(resolvedPath, .{ .mode = .read_only });
-        defer config.close();
+        const config_file = try std.fs.openFileAbsolute(resolvedPath, .{ .mode = .read_only });
+        defer config_file.close();
 
-        const contents = try std.fs.File.readToEndAlloc(config, allocator, std.math.maxInt(usize));
+        const contents = try config_file.readToEndAlloc(allocator, std.math.maxInt(usize));
         defer allocator.free(contents);
+        //Returns an iterator that iterates over the slices of
+        //buffer that are separated by the byte sequence in delimiter.
+        var lines = std.mem.splitSequence(u8, contents, "\n");
+        //type u8, contents - slice, \n - delimeter
+        const stdout = std.io.getStdOut().writer();
 
-        print("{s}", .{contents});
+        while (lines.next()) |line| {
+            const trimmed_line = std.mem.trimLeft(u8, line, " \t");
+            // Skip lines that start with '#' after trimming whitespace
+            if (trimmed_line.len > 0 and trimmed_line[0] == '#') continue;
+            try stdout.print("{s}\n", .{line});
+        }
     } else {}
 }
 
