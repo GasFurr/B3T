@@ -19,11 +19,40 @@ pub fn init(allocator: std.mem.Allocator) ![]const u8 {
 
     // getting path to binary
     const selfPath = try util.absolutePath(&buf);
+    defer allocator.free(selfPath); 
     // init.toml should always be in the same folder as binary
     // and should always contain path to config.toml
-    const initPath = try std.fs.path.join(allocator, &[_][]const u8{ selfPath, "init.toml" }); // Making from it path to init.toml
+
+    const initPath = try std.fs.path.join(allocator, &[_][]const u8{ selfPath, "init.toml" });
+    defer allocator.free(initPath); // initPath is allocated by std.fs.path.join
+
     // Open it and read.
-    const initconf = try std.fs.cwd().openFile(initPath, .{ .mode = .read_only });
+    const initconf = std.fs.cwd().openFile(initPath, .{ .mode = .read_only }) catch |err| {
+    // Provide the user-friendly context specific to init.toml's purpose
+    print("{s}--- b3t Initialization Error ---\n", .{red});
+
+    // Provide actionable steps based on common errors
+    switch (err) {
+        error.FileNotFound => {
+    print("b3t expects a configuration file named 'init.toml' to be located in the same directory as the b3t binary.\n", .{});
+    print("The b3t binary is currently located at: {s}{s}{s}\n", .{yellow, selfPath, reset});
+    print("The 'init.toml' file should contain the FULL PATH to your main 'settings.toml' file.\n", .{});
+        },
+        error.AccessDenied => {
+            print("Action Required: Permission denied to access 'init.toml'.\n", .{});
+            print("Please ensure b3t has read permissions for the file: {s}{s}{s}\n", .{cyan, initPath, reset});
+        },
+        else => {
+            print("An unexpected error occurred while trying to open 'init.toml'.\n", .{});
+            print("Error details: {any}\n", .{err});
+            print("Please check file permissions and ensure the file is not corrupted.\n", .{});
+        },
+    }
+    print("(For more detailed instructions, please check the b3t documentation.)\n", .{});
+    print("{s}--------------------------------\n", .{reset});
+
+    return err; // Always return the error as per function signature
+};
     defer initconf.close(); // Ensure the file is closed when done
 
     // Read the entire file into memory

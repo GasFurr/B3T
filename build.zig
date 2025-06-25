@@ -6,7 +6,7 @@ pub fn build(b: *std.Build) void {
 
     // create executable binary target
     const exe = b.addExecutable(.{
-        .name = "b3t-bin",
+        .name = "b3t",
         .root_source_file = b.path("src/main.zig"),
         .target = target,
         .optimize = .ReleaseSmall,
@@ -38,10 +38,10 @@ pub fn build(b: *std.Build) void {
 
     // Release package configuration
     const exe_release = b.addExecutable(.{
-        .name = "b3t-bin",
+        .name = "b3t",
         .root_source_file = b.path("src/main.zig"),
         .target = target,
-        .optimize = .ReleaseSafe,
+        .optimize = .ReleaseFast,
     });
 
     // Create release directory structure
@@ -82,7 +82,7 @@ pub fn build(b: *std.Build) void {
         "-rf",
         "release/",
         "b3t.tar.gz",
-        "b3t-bin",
+        "b3t",
     });
 
     const clean_step = b.step("clean", "Cleans up root from release files");
