@@ -1,76 +1,84 @@
-# CURRENTLY WIP - ALL INFO DOWN HERE IS JUST IMAGE OF WHAT SOFTWARE SHOULD DO AT THE END OF DEVELOPMENT!
+<div align="center">
 
-# CURRENTLY NOT WORKING.
+[![Zig Version](https://img.shields.io/badge/Zig-0.15.0-%23ec7c0c)](https://ziglang.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+</div>
+
+-----
+
+> **⚠️ Work In Progress:**
+> B3T is currently under active development. The features and workflow described below represent the final vision and are not yet fully  implemented.
+
+-----
 
 # B3T: Better Todo Than (your) Todo
 
-_Lightweight, offline-first todo tracker for developers. Built with Zig._  
-No bloat, no cloud, just your tasks.
+**B3T** is a lightweight, offline-first todo tracker for developers, engineered with Zig. No bloat, no cloud, just your tasks – directly from your codebase.
 
-[![Zig Version](https://img.shields.io/badge/Zig-0.14.0-%23ec7c0c)](https://ziglang.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+Driven by a desire for simplicity and direct control, B3T aims to be:
 
----
+* **Offline-First:** Your tasks are yours, always available, no network required.
+* **Zero-Dependency:** A single, self-contained binary, ready to run anywhere.
+* **Codebase-Centric:** Your code is the source of truth for your tasks.
 
-## 🚀 Why B3T?
+-----
+
+### **Why B3T?**
 
 For developers tired of:
 
-- **Cloud-dependent tools** that break without Wi-Fi.
-- **Heavyweight apps** that drain resources.
-- **Scattered TODOs** buried in code comments.
+* **Cloud-dependent tools** that break without Wi-Fi.
+* **Heavyweight apps** that drain resources.
+* **Scattered TODOs** buried in code comments.
 
-B3T solves this with **local-first task management** and seamless codebase integration.
+B3T solves these challenges with **local-first task management** and seamless codebase integration.
 
----
+-----
 
-## ✨ Features
+### **Core Capabilities**
 
-- **📴 Offline-First**  
-  Work from a cabin, train, or server room. No accounts, no sync, no BS.
-- **⚡ Zig-Powered Simplicity**  
-  Single binary, zero runtime dependencies. Just works.
-- **🔎 Codebase-Aware**  
-  Automatically find `//B3T-TODO` comments with `b3t scan`.
-- **📂 Template-Driven**  
-  Define projects via `b3t.toml`. Reuse configs across projects.
-- **🔒 Minimalist by Default**  
-  No GUIs, no plugins, no distractions.
+* **📴 Offline-First** Work from a cabin, train, or server room. No accounts, no sync, no BS.
+* **⚡ Zig-Powered Simplicity** Single binary, zero runtime dependencies. Just works.
+* **🔎 Codebase-Aware** Automatically find `//B3T-TODO` comments with `b3t scan`.
+* **📂 Template-Driven** Define project configurations via `b3t.toml` templates. Reuse settings across projects.
+* **🔒 Minimalist by Default** No GUIs, no plugins, no distractions.
 
----
+-----
 
-## 🛠️ Quick Start
+### **Getting Started**
 
-1. **Install** (requires [Zig](https://ziglang.org)):
+1.  **Install** (requires [Zig](https://ziglang.org)):
 
-   ```bash
-   git clone https://github.com/gasfurr/b3t
-   cd b3t
-   ./install.sh  # Installs B3T with bash script
-   ```
+    ```bash
+    git clone [https://github.com/gasfurr/b3t](https://github.com/gasfurr/b3t)
+    cd b3t
+    ./install.sh # Installs B3T and sets up initial configuration files.
+    ```
+> **Note:** The `install.sh` script configures B3T for the current user only, aligning with its design as a streamlined, single-user tool.
 
-2. **Init a Project**:
+2.  **Init a Project**:
 
-   ```bash
-   b3t init  # Creates b3t.toml in your project
-   ```
+    ```bash
+    b3t init # Creates a default b3t.toml in your current project root.
+    ```
 
-3. **Scan for TODOs**:
+3.  **Scan for TODOs**:
 
-   ```bash
-   b3t scan  # Detects TODOs in code comments
-   ```
+    ```bash
+    b3t scan # Detects TODOs based on the b3t.toml configuration in your codebase.
+    ```
 
-4. **List Tasks**:
+4.  **List Tasks**:
 
-   ```bash
-   b3t list  # Shows tasks from code.
-   ```
+    ```bash
+    b3t list # Displays tasks parsed from your code.
+    ```
 
----
+-----
 
-## 📝 Example Workflow
-(everything here is not working for now.)
+### **Example Workflow**
+
 **1. Create your `mytemplate.toml`:**
 
 ```toml
@@ -87,7 +95,7 @@ priorities.flag = "b3t.priority=" #It will find the keyword and set priority
 # Ignore configuration
 project.ignore = ["src/stolencode.rs", "src/privatelinks.txt"] # Will not read this files
 # And everything else... (more in docs)
-```
+````
 
 **2. Write Code with TODOs:**
 
@@ -111,7 +119,7 @@ fn main() {
 # Go to your project root
 ~ b3t init my_awesome_app -t mytemplate
 # Creates b3t.toml by your template (stored in program)
-~ b3t scan # When you in your projects root
+~ b3t scan # When you're in your project's root
 # Detects the comments using b3t.toml configuration. (It scans all files if not said otherwise.)
 ~ cd /home/.homework # Now you can do anything
 ~ b3t list my_awesome_app # Just ask for your project's Todo list!
@@ -130,52 +138,41 @@ fn main() {
 # So easy, isn't it?
 ```
 
----
+-----
 
-## 🧠 Philosophy
+### **Our Philosophy**
 
-- **Your Machine, Your Rules**  
-  Tasks stay on your device. No telemetry, no hidden sync.
-- **Templates Over Boilerplate**  
-  Configure once, reuse everywhere. No more copy-pasting.
-- **Small and Focused**  
-  Does one thing well: track TODOs in code. Nothing else.
+  * **Your Machine, Your Rules** Tasks stay on your device. No telemetry, no hidden sync.
+  * **Templates Over Boilerplate** Configure once, reuse everywhere. No more copy-pasting.
+  * **Small and Focused** Does one thing well: track TODOs in code. Nothing else.
 
----
+-----
 
-## 🤝 Contributing
+### **Contributing to B3T**
 
 B3T is **open source** ([MIT](LICENSE)). We welcome:
 
-- **Templates**: Share `b3t.toml` presets for frameworks.
-- **Core Improvements**: Zig optimizations or bug fixes.
-- **Documentation**: Improve guides for advanced configs.
+  * **Templates**: Share `b3t.toml` presets for frameworks.
+  * **Core Improvements**: Zig optimizations or bug fixes.
+  * **Documentation**: Improve guides for advanced configs.
 
 Check [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
----
+-----
 
-## 📜 License
-
-B3T is licensed under the [MIT License](LICENSE).
-
-This project uses [microwave](https://github.com/edqx/microwave) ([MIT License](https://github.com/edqx/microwave/blob/main/LICENSE)) for TOML parsing.
-
----
-
-## ❓ FAQ
+### **Frequently Asked Questions**
 
 **Q: Why Zig?**
 
-A: For raw speed and explicit control. And i just love this language, it's _the_ c but better as i see it.
+A: For raw speed and explicit control. And I just love this language; it's *the* C but better, as I see it.
 
 > I just feel like writing good software is best support for new programming language.
 
-**Q: How to add task manually?**
+**Q: How to add a task manually?**
 
 A: It's not intended, but you can just create some sort of `todo.txt` and `b3t` will parse it.
 
-> It's a design choice - b3t strictly believes in your codebase as only true source.
+> It's a design choice - b3t strictly believes in your codebase as the only true source.
 
 **Q: Can I sync across devices?**
 
@@ -185,10 +182,14 @@ A: Not directly—by design. But you can version-control `.b3t` with Git if you 
 
 A: To stay minimal. Pipe `b3t list` to other tools if needed.
 
-**Q: What if I want more features?**
+-----
 
-A: Keep an eye on [BetterB3T]() for plugins/SQLite. This version is intentionally barebones.
+### **Legal Stuff**
 
----
+B3T is licensed under the [MIT License](https://www.google.com/search?q=LICENSE). You are free to use, modify, and distribute this code. Please include appropriate attribution (e.g., "© GasFurr") as per the license terms.
 
-**Made by developers, for developers.**
+This project uses [microwave](https://github.com/edqx/microwave) ([MIT License](https://github.com/edqx/microwave/blob/main/LICENSE)) for TOML parsing.
+
+<div align="center">
+
+`Made by developers, for developers.`
