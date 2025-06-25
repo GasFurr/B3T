@@ -14,6 +14,13 @@ pub const yellow = "\x1b[33m";
 pub const cyan = "\x1b[36m";
 pub const reset = "\x1b[0m";
 
+// Yeah, for now this thing is as unconventional as it gets.
+// It's not good, i will need to adjust it for FHS (Filesystem Hierarchy Standard) later
+// init in /usr/share/b3t/init.toml
+// default settings in /usr/share/bet/settings.toml
+// oh. I will need to rework how init.toml works. uhh.
+//B3TODO: adjust for FHS
+// (yes, i will use b3t when working on b3t, any problems?)
 pub fn init(allocator: std.mem.Allocator) ![]const u8 {
     var buf: [4096]u8 = undefined;
 
