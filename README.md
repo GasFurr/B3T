@@ -16,34 +16,13 @@
 
 **B3T** is a lightweight, offline-first todo tracker for developers, engineered with Zig. No bloat, no cloud, just your tasks – directly from your codebase.
 
-Driven by a desire for simplicity and direct control, B3T aims to be:
-
-* **Offline-First:** Your tasks are yours, always available, no network required.
-* **Zero-Dependency:** A single, self-contained binary, ready to run anywhere.
-* **Codebase-Centric:** Your code is the source of truth for your tasks.
-
------
-
-### **Why B3T?**
-
-For developers tired of:
-
-* **Cloud-dependent tools** that break without Wi-Fi.
-* **Heavyweight apps** that drain resources.
-* **Scattered TODOs** buried in code comments.
-
-B3T solves these challenges with **local-first task management** and seamless codebase integration.
-
------
-
 ### **Core Capabilities**
 
 * **📴 Offline-First** Work from a cabin, train, or server room. No accounts, no sync, no BS.
 * **⚡ Zig-Powered Simplicity** Single binary, zero runtime dependencies. Just works.
-* **🔎 Codebase-Aware** Automatically find `//B3T-TODO` comments with `b3t scan`.
+* **🔎 Codebase-Aware** Automatically find todo comments with `b3t scan`.
 * **📂 Template-Driven** Define project configurations via `b3t.toml` templates. Reuse settings across projects.
 * **🔒 Minimalist by Default** No GUIs, no plugins, no distractions.
-
 -----
 
 ### **Getting Started**
@@ -113,8 +92,6 @@ fn main() {
 **3. Do the work:**
 
 ```bash
-~ b3t template save mytemplate.toml mytemplate
-# Save your templates.
 ~ cd home/my_awesome_app
 # Go to your project root
 ~ b3t init my_awesome_app -t mytemplate
@@ -186,7 +163,7 @@ A: To stay minimal. Pipe `b3t list` to other tools if needed.
 
 ### **Legal Stuff**
 
-B3T is licensed under the [MIT License](https://www.google.com/search?q=LICENSE). You are free to use, modify, and distribute this code. Please include appropriate attribution (e.g., "© GasFurr") as per the license terms.
+B3T is licensed under the [MIT License](LICENSE). You are free to use, modify, and distribute this code. Please include appropriate attribution (e.g., "© GasFurr") as per the license terms.
 
 This project uses [microwave](https://github.com/edqx/microwave) ([MIT License](https://github.com/edqx/microwave/blob/main/LICENSE)) for TOML parsing.
 
