@@ -1,5 +1,6 @@
 const std = @import("std");
 const clap = @import("clap");
+const handler = @import("handlers.zig");
 
 // Void, but can return error.
 pub fn main() !void {
@@ -13,6 +14,7 @@ pub fn main() !void {
         \\-i, --init create new b3t project.
         \\-s, --scan scan the project.
         \\-l, --list <str> show todo list.
+        \\-d, --delete <str> delete the project.
         \\
     );
 
@@ -38,7 +40,9 @@ pub fn main() !void {
         std.debug.print("--scan\n", .{});
     //lol, i didn't know you can do this in zig, that's pretty cool.
     if (res.args.init != 0)
-        std.debug.print("--init\n", .{});
+        try handler.init_handler();
     if (res.args.list) |s| //Catching S from argument
-        std.debug.print("--list = {s}\n", .{s});
+        try handler.list_handler(s);
+    if (res.args.delete) |s| //Catching S from argument
+        try handler.delete_handler(s);
 }
