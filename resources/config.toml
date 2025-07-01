@@ -1,0 +1,8 @@
+#Environment configuration.
+[[env]]
+#Default skin
+skin = "default"
+#Default template
+template = "default"
+
+# There's not much config now, but i will work on configuriability for B3T in future.

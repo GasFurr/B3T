@@ -1,12 +1,11 @@
 template_name = "default"
 
-[project]
+[[project]]
 name = "my_awesome_app"
-ignore = [""] # optional
-parse = "// todo:" # Configure parser
+ignore = [""] # Optional
+parse = "// todo:" # Target todo keyword
 
-[priorities]
+[[priorities]]
 name = [ "low", "med", "high", "CRIT"] # 1, 2, 3, 4
 level = [1, 2, 3, 4] # Just write it in exact order
-flag = "priority:" #It will find the keyword and set priority
-# And it's all optional, you can just not add this lines, comment them out and forget
+flag = "priority:" # Priority level keyword
