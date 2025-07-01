@@ -18,6 +18,9 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
+    const clap = b.dependency("clap", .{});
+    exe.root_module.addImport("clap", clap.module("clap"));
+
     // Add its module using the
     exe.root_module.addImport("microwave", zig_toml_dep.module("microwave"));
     // Place binary in root folder

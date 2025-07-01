@@ -19,9 +19,7 @@
 ### **Core Capabilities**
 
 * **📴 Offline-First** Work from a cabin, train, or server room. No accounts, no sync, no BS.
-* **⚡ Zig-Powered Simplicity** Single binary, zero runtime dependencies. Just works.
 * **🔎 Codebase-Aware** Automatically find todo comments with `b3t scan`.
-* **📂 Template-Driven** Define project configurations via `b3t.toml` templates. Reuse settings across projects.
 * **🔒 Minimalist by Default** No GUIs, no plugins, no distractions.
 -----
 
@@ -39,19 +37,19 @@
 2.  **Init a Project**:
 
     ```bash
-    b3t init # Creates a default b3t.toml in your current project root.
+    b3t -i # Creates a default b3t.toml in your current project root.
     ```
 
 3.  **Scan for TODOs**:
 
     ```bash
-    b3t scan # Detects TODOs based on the b3t.toml configuration in your codebase.
+    b3t -s # Detects TODOs based on the b3t.toml configuration in your codebase.
     ```
 
 4.  **List Tasks**:
 
     ```bash
-    b3t list # Displays tasks parsed from your code.
+    b3t -l # Displays tasks parsed from your code.
     ```
 
 -----
@@ -73,8 +71,7 @@ priorities.level = [2, 3, 4, 1] # Just write it in same order
 priorities.flag = "b3t.priority=" #It will find the keyword and set priority
 # Ignore configuration
 project.ignore = ["src/stolencode.rs", "src/privatelinks.txt"] # Will not read this files
-# And everything else... (more in docs)
-````
+```
 
 **2. Write Code with TODOs:**
 
@@ -94,12 +91,12 @@ fn main() {
 ```bash
 ~ cd home/my_awesome_app
 # Go to your project root
-~ b3t init my_awesome_app -t mytemplate
+~ b3t -i my_awesome_app -t mytemplate
 # Creates b3t.toml by your template (stored in program)
-~ b3t scan # When you're in your project's root
+~ b3t -i # When you're in your project's root
 # Detects the comments using b3t.toml configuration. (It scans all files if not said otherwise.)
 ~ cd /home/.homework # Now you can do anything
-~ b3t list my_awesome_app # Just ask for your project's Todo list!
+~ b3t -l my_awesome_app # Just ask for your project's Todo list!
 |> my_awesome_app todo:
 | ► 1.[CRIT] Fix memory leak
 |   → src/main.rs:2
@@ -110,32 +107,12 @@ fn main() {
 | ► 4.[] someunpriorityzed todo
 |   → src/main.rs:4
 # And then you can just delete your project from database anytime
-~ b3t delete my_awesome_app
+~ b3t -r my_awesome_app
 |> Are you sure? [Yes/any key]
 # So easy, isn't it?
 ```
 
------
-
-### **Our Philosophy**
-
-  * **Your Machine, Your Rules** Tasks stay on your device. No telemetry, no hidden sync.
-  * **Templates Over Boilerplate** Configure once, reuse everywhere. No more copy-pasting.
-  * **Small and Focused** Does one thing well: track TODOs in code. Nothing else.
-
------
-
-### **Contributing to B3T**
-
-B3T is **open source** ([MIT](LICENSE)). We welcome:
-
-  * **Templates**: Share `b3t.toml` presets for frameworks.
-  * **Core Improvements**: Zig optimizations or bug fixes.
-  * **Documentation**: Improve guides for advanced configs.
-
-Check [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
------
+---
 
 ### **Frequently Asked Questions**
 
@@ -153,7 +130,7 @@ A: It's not intended, but you can just create some sort of `todo.txt` and `b3t` 
 
 **Q: Can I sync across devices?**
 
-A: Not directly—by design. But you can version-control `.b3t` with Git if you want.
+A: Not directly—by design. But you can version-control with Git if you want.
 
 **Q: Why no GUI/plugins?**
 

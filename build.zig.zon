@@ -9,6 +9,10 @@
             .url = "https://github.com/edqx/microwave/archive/dc25a9ba890935f99d2f139caeec65ca00e5b6ca.tar.gz",
             .hash = "microwave-1.0.0-e4c5GQewAQAl_4dBjs6W0ZEI5xGEC4DSfj4DR9T47VzG",
         },
+        .clap = .{
+            .url = "git+https://github.com/Hejsil/zig-clap#cc5c6a5d71a317ed4b0ad776842d1d0655f72d0a",
+            .hash = "clap-0.10.0-oBajB7jkAQAZ4cKLlzkeV9mDu2yGZvtN2QuOyfAfjBij",
+        },
     },
 
     .paths = .{ "build.zig", "build.zig.zon", "src", "LICENSE", "README.md", "resources/" },
