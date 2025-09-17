@@ -62,13 +62,3 @@ pub fn read_index(allocator: std.mem.Allocator) ![]u8 {
 
     return file.readToEndAlloc(allocator, std.math.maxInt(usize));
 }
-
-// get current working directory
-pub fn get_cwd(allocator: std.mem.Allocator) ![]u8 {
-    // Getting Current Working Directory
-    const cwd = try std.process.getCwdAlloc(allocator);
-    defer allocator.free(cwd);
-
-    std.debug.print("Current directory: {s}\n", .{cwd});
-    return cwd;
-}

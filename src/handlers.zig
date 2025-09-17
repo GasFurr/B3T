@@ -13,8 +13,9 @@ pub fn init_handler() !void {
     // 2. Adding indexing to data/index.toml
     // 3. Creating project.toml in data/projects
 
-    const cwd = try utils.get_cwd(allocator);
-    std.debug.print("Current Working Directory {s}", .{cwd});
+    const cwd = try std.process.getCwdAlloc(allocator);
+    std.debug.print("Current Working Directory {s}\n", .{cwd});
+    allocator.free(cwd);
 }
 
 // List handler
