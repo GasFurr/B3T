@@ -6,12 +6,15 @@ const utils = @import("utils.zig");
 pub fn init_handler() !void {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     defer _ = gpa.deinit();
+    const allocator = gpa.allocator();
 
     // Okay, we have a new way.
     // 1. Creating b3t.toml by the template
     // 2. Adding indexing to data/index.toml
     // 3. Creating project.toml in data/projects
 
+    const cwd = try utils.get_cwd(allocator);
+    std.debug.print("Current Working Directory {s}", .{cwd});
 }
 
 // List handler

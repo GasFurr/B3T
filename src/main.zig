@@ -8,6 +8,16 @@ pub fn main() !void {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     defer _ = gpa.deinit(); // No leakz in my code!1!1
 
+    // Create buffer and writer for stderr (for diagnostics)
+    var stderr_buffer: [4096]u8 = undefined;
+    var stderr_writer = std.fs.File.stderr().writer(&stderr_buffer);
+    const stderr = &stderr_writer.interface;
+
+    // Create buffer and writer for stdout (for normal output)
+    var stdout_buffer: [4096]u8 = undefined;
+    var stdout_writer = std.fs.File.stdout().writer(&stdout_buffer);
+    const stdout = &stdout_writer.interface;
+
     // I have to use standard format.
     const params = comptime clap.parseParamsComptime(
         \\-h, --help display this text and exit.
@@ -24,17 +34,18 @@ pub fn main() !void {
         .diagnostic = &diag,
         .allocator = gpa.allocator(),
     }) catch |err| {
-        // Report useful error and exit.
-        diag.report(std.io.getStdErr().writer(), err) catch {};
-        return err;
+        // Report to stderr (for errors)
+        try diag.report(stderr, err);
+        try stderr.flush(); // Don't forget to flush!
+        return;
     };
     defer res.deinit();
 
     // argument logic.
     if (res.args.help != 0) {
-        try clap.usage(std.io.getStdErr().writer(), clap.Help, &params);
-        std.debug.print("\n", .{});
-        return clap.help(std.io.getStdErr().writer(), clap.Help, &params, .{});
+        try clap.help(stdout, clap.Help, &params, .{});
+        try stdout.flush();
+        return;
     }
     if (res.args.scan != 0)
         std.debug.print("--scan\n", .{});
