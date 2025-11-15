@@ -3,7 +3,7 @@ const microwave = @import("microwave");
 const utils = @import("utils.zig");
 
 // Easiest command - init.
-pub fn init_handler() !void {
+pub fn init_handler(name: []const u8) !void {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     defer _ = gpa.deinit();
     const allocator = gpa.allocator();
@@ -13,9 +13,23 @@ pub fn init_handler() !void {
     // 2. Adding indexing to data/index.toml
     // 3. Creating project.toml in data/projects
 
+    // Getting cwd
     const cwd = try std.process.getCwdAlloc(allocator);
     std.debug.print("Current Working Directory {s}\n", .{cwd});
     allocator.free(cwd);
+    // Creating b3t.toml
+    const file = std.fs.cwd().createFile("b3t.toml", .{ .read = true, .exclusive = true }) catch |err| {
+        std.debug.print("Caught an error while init'ing a project:\n", .{});
+        std.debug.print("{}\n", .{err});
+        if (err == error.PathAlreadyExists) {
+            std.debug.print("lol. do smth.\n", .{});
+        }
+
+        return;
+    };
+    defer file.close();
+    try file.writeAll("Hello, world!");
+    _ = name;
 }
 
 // List handler
