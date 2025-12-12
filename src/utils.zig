@@ -43,6 +43,9 @@ pub fn resolve_home(allocator: std.mem.Allocator, suffix: []const u8) ![]const u
     return std.fs.path.join(allocator, &[_][]const u8{ home_dir, suffix });
 }
 
+// BROO, zig 0.15 broken it all :(((
+// i need to rewrite it again.
+
 pub fn read_config(allocator: std.mem.Allocator) ![]const u8 {
     const path = try config_path(allocator);
     defer allocator.free(path);
@@ -50,7 +53,7 @@ pub fn read_config(allocator: std.mem.Allocator) ![]const u8 {
     const file = try std.fs.cwd().openFile(path, .{});
     defer file.close();
 
-    return file.readToEndAlloc(allocator, std.math.maxInt(usize));
+    return file.read(allocator);
 }
 
 pub fn read_index(allocator: std.mem.Allocator) ![]u8 {
@@ -60,5 +63,5 @@ pub fn read_index(allocator: std.mem.Allocator) ![]u8 {
     const file = try std.fs.cwd().openFile(path, .{});
     defer file.close();
 
-    return file.readToEndAlloc(allocator, std.math.maxInt(usize));
+    return file.read(allocator, std.math.maxInt(usize));
 }
