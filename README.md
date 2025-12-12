@@ -9,6 +9,7 @@
 
 > **⚠️ Work In Progress:**
 > B3T is currently under active development. The features and workflow described below represent the final vision and are not yet fully  implemented.
+> It's absolutely broken in zig 0.15... I'm working on it.
 
 -----
 
