@@ -1,0 +1,11 @@
+template_name = "default"
+
+[[project]]
+name = "my_awesome_app"
+ignore = [""] # Optional
+parse = "// todo:" # Target todo keyword
+
+[[priorities]]
+name = [ "low", "med", "high", "CRIT"] # 1, 2, 3, 4
+level = [1, 2, 3, 4] # Just write it in exact order
+flag = "priority:" # Priority level keyword

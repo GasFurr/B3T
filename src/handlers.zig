@@ -27,11 +27,16 @@ pub fn init_handler(name: []const u8, template: ?[]const u8) !void {
 
     std.debug.print("Project Name: {s}\n", .{name});
 
+    const templates_path: []const u8 = try utils.resolve_home(allocator, "/.config/b3t/config/templates");
+
     if (template) |t| {
         std.debug.print("Using template: {s}\n", .{t});
         // TODO: Load template file and use it to create b3t.toml
     } else {
         std.debug.print("Using default template\n", .{});
+        const default_template: []const u8 = try utils.read_config(allocator, try std.fmt.allocPrint(allocator, "{s}/default.toml", .{templates_path}));
+        try file.writeAll(default_template);
+        defer allocator.free(default_template);
         // TODO: Use default template
     }
 
