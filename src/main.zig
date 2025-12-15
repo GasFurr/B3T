@@ -22,8 +22,9 @@ pub fn main() !void {
     const params = comptime clap.parseParamsComptime(
         \\-h, --help display this text and exit.
         \\-i, --init <str> create new b3t project.
+        \\-t  --template <str> combined with -i gives you an option to change the template of b3t.toml
         \\-s, --scan scan the project.
-        \\-l, --list <str> show todo list.
+        \\-l, --list <str> show todo list. Show config if "-l config".
         \\-d, --delete <str> delete the project.
         \\
     );
@@ -49,11 +50,19 @@ pub fn main() !void {
     }
     if (res.args.scan != 0)
         std.debug.print("--scan\n", .{});
-    //lol, i didn't know you can do this in zig, that's pretty cool.
-    if (res.args.init) |s|
-        try handler.init_handler(s);
-    if (res.args.list) |s| //Catching S from argument
+    if (res.args.init) |s| {
+        const template = if (res.args.template) |t| t else null;
+        try handler.init_handler(s, template);
+    }
+    if (res.args.list) |s| //Catching string from argument
         try handler.list_handler(s);
-    if (res.args.delete) |s| //Catching S from argument
+    if (res.args.delete) |s| //Catching string from argument
         try handler.delete_handler(s);
+    if (res.args.template) |s| {
+        // Only reachable if --template was used WITHOUT --init
+        if (res.args.init == null) {
+            // read template.toml
+            std.debug.print("Template without init: {s}\n", .{s});
+        }
+    }
 }

@@ -3,33 +3,39 @@ const microwave = @import("microwave");
 const utils = @import("utils.zig");
 
 // Easiest command - init.
-pub fn init_handler(name: []const u8) !void {
+pub fn init_handler(name: []const u8, template: ?[]const u8) !void {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     defer _ = gpa.deinit();
     const allocator = gpa.allocator();
 
-    // Okay, we have a new way.
-    // 1. Creating b3t.toml by the template
-    // 2. Adding indexing to data/index.toml
-    // 3. Creating project.toml in data/projects
-
     // Getting cwd
     const cwd = try std.process.getCwdAlloc(allocator);
+    defer allocator.free(cwd);
     std.debug.print("Current Working Directory {s}\n", .{cwd});
-    allocator.free(cwd);
-    // Creating b3t.toml
+
+    // Create b3t.toml
     const file = std.fs.cwd().createFile("b3t.toml", .{ .read = true, .exclusive = true }) catch |err| {
         std.debug.print("Caught an error while init'ing a project:\n", .{});
         std.debug.print("{}\n", .{err});
         if (err == error.PathAlreadyExists) {
-            std.debug.print("lol. do smth.\n", .{});
+            // Handle existing file case
+            std.debug.print("b3t.toml already exists. Skipping creation.\n", .{});
         }
-
         return;
     };
     defer file.close();
-    try file.writeAll("Hello, world!");
-    _ = name;
+
+    std.debug.print("Project Name: {s}\n", .{name});
+
+    if (template) |t| {
+        std.debug.print("Using template: {s}\n", .{t});
+        // TODO: Load template file and use it to create b3t.toml
+    } else {
+        std.debug.print("Using default template\n", .{});
+        // TODO: Use default template
+    }
+
+    // TODO: add resulted path into data/index.toml
 }
 
 // List handler
@@ -45,12 +51,12 @@ pub fn list_handler(arg: []const u8) !void {
     const arena_alloc = arena.allocator();
 
     // Get all paths and data
-    const config = try utils.read_config(arena_alloc);
     const config_dir = try utils.config_dir(arena_alloc);
     const config_path = try utils.config_path(arena_alloc);
-    const index = try utils.read_index(arena_alloc);
+    const config = try utils.read_config(arena_alloc, config_path);
     const index_dir = try utils.data_dir(arena_alloc);
     const index_path = try utils.index_path(arena_alloc);
+    const index = try utils.read_index(arena_alloc, index_path);
 
     if (std.mem.eql(u8, arg, "config")) {
         // Print output
