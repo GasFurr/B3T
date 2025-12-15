@@ -20,12 +20,12 @@ pub fn main() !void {
 
     // I have to use standard format.
     const params = comptime clap.parseParamsComptime(
-        \\-h, --help display this text and exit.
-        \\-i, --init <str> create new b3t project.
-        \\-t  --template <str> combined with -i gives you an option to change the template of b3t.toml
-        \\-s, --scan scan the project.
-        \\-l, --list <str> show todo list. Show config if "-l config".
-        \\-d, --delete <str> delete the project.
+        \\-h, --help           display this text and exit.
+        \\-i, --init <str>     create new b3t project.
+        \\-s, --scan           scan the project.
+        \\-l, --list <str>     show todo list. Show config if "-l config".
+        \\-d, --delete <str>   delete the project.
+        \\-t,  --template <str> combined with -i changes the template of b3t.toml
         \\
     );
 

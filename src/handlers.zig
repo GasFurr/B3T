@@ -36,6 +36,7 @@ pub fn init_handler(name: []const u8, template: ?[]const u8) !void {
     }
 
     // TODO: add resulted path into data/index.toml
+
 }
 
 // List handler
