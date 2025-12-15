@@ -45,12 +45,13 @@ pub fn list_handler(arg: []const u8) !void {
     const arena_alloc = arena.allocator();
 
     // Get all paths and data
-    const config = try utils.read_config(arena_alloc);
     const config_dir = try utils.config_dir(arena_alloc);
     const config_path = try utils.config_path(arena_alloc);
-    const index = try utils.read_index(arena_alloc);
+    const config = try utils.read_config(arena_alloc, config_path);
+
     const index_dir = try utils.data_dir(arena_alloc);
     const index_path = try utils.index_path(arena_alloc);
+    const index = try utils.read_index(arena_alloc, index_path);
 
     if (std.mem.eql(u8, arg, "config")) {
         // Print output

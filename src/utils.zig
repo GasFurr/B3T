@@ -1,8 +1,7 @@
 const std = @import("std");
 const microwave = @import("microwave");
 const models = @import("models.zig");
-
-// Variables:
+const fs = std.fs;
 
 // Path helper functions (not global constants!)
 pub fn config_dir(allocator: std.mem.Allocator) ![]const u8 {
@@ -46,22 +45,45 @@ pub fn resolve_home(allocator: std.mem.Allocator, suffix: []const u8) ![]const u
 // BROO, zig 0.15 broken it all :(((
 // i need to rewrite it again.
 
-pub fn read_config(allocator: std.mem.Allocator) ![]const u8 {
-    const path = try config_path(allocator);
-    defer allocator.free(path);
-
-    const file = try std.fs.cwd().openFile(path, .{});
+pub fn read_config(allocator: std.mem.Allocator, path: []const u8) ![]u8 {
+    var file = try std.fs.cwd().openFile(path, .{ .mode = .read_only });
     defer file.close();
 
-    return file.read(allocator);
+    const file_size = (try file.stat()).size;
+
+    // Allocate exactly what we need
+    const content = try allocator.alloc(u8, file_size);
+    errdefer allocator.free(content);
+
+    var threaded: std.Io.Threaded = .init_single_threaded;
+    const io = threaded.io();
+    // In the new API, file.reader() takes the buffer directly!
+    var file_reader = file.reader(io, content);
+
+    // .fill(n) tells the reader to fill the internal buffer with n bytes
+    try file_reader.interface.fill(file_size);
+
+    return content;
 }
 
-pub fn read_index(allocator: std.mem.Allocator) ![]u8 {
-    const path = try index_path(allocator);
-    defer allocator.free(path);
-
-    const file = try std.fs.cwd().openFile(path, .{});
+pub fn read_index(allocator: std.mem.Allocator, path: []const u8) ![]u8 {
+    var file = try std.fs.cwd().openFile(path, .{ .mode = .read_only });
     defer file.close();
 
-    return file.read(allocator, std.math.maxInt(usize));
+    var threaded: std.Io.Threaded = .init_single_threaded;
+    const io = threaded.io();
+
+    var read_buf: [4096]u8 = undefined;
+    var f_reader = file.reader(io, &read_buf);
+
+    // Using the modern Allocating writer
+    var list = std.Io.Writer.Allocating.init(allocator);
+    errdefer list.deinit();
+
+    _ = try f_reader.interface.streamRemaining(&list.writer);
+
+    // Return the slice. Because it's from an Arena,
+    // we don't need to return the 'list' object itself,
+    // just the bytes.
+    return list.written();
 }
