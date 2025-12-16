@@ -15,11 +15,11 @@ pub fn init_handler(name: []const u8, template: ?[]const u8) !void {
 
     // Create b3t.toml
     const file = std.fs.cwd().createFile("b3t.toml", .{ .read = true, .exclusive = true }) catch |err| {
-        std.debug.print("Caught an error while init'ing a project:\n", .{});
-        std.debug.print("{}\n", .{err});
         if (err == error.PathAlreadyExists) {
             // Handle existing file case
             std.debug.print("b3t.toml already exists. Skipping creation.\n", .{});
+        } else {
+            return err;
         }
         return;
     };
@@ -28,15 +28,60 @@ pub fn init_handler(name: []const u8, template: ?[]const u8) !void {
     std.debug.print("Project Name: {s}\n", .{name});
 
     const templates_path: []const u8 = try utils.resolve_home(allocator, "/.config/b3t/config/templates");
+    defer allocator.free(templates_path);
+
+    // OOOHHHH, this code SUCKS!
+    // rewrite this shit later, why delete b3t.toml
+    // if we can just NOT CREATE IT IN THE FIRST PLACE.
+    //
+    // Later validate all data before I/O operations.
+    // Yes, on this scale the performance overhead is negligable,
+    // but it's generally a good practice to minimize I/O operations.
 
     if (template) |t| {
         std.debug.print("Using template: {s}\n", .{t});
         // TODO: Load template file and use it to create b3t.toml
+
+        const template_path: []const u8 = try std.fmt.allocPrint(
+            allocator,
+            "{s}/{s}.toml",
+            .{ templates_path, t },
+        );
+
+        defer allocator.free(template_path);
+
+        const template_file = utils.read_config(allocator, template_path) catch |err| switch (err) {
+            error.FileNotFound => {
+                std.debug.print("Error: Template '{s}' not found.\n", .{t});
+                // TODO: try listAvailableTemplates(templates_path);
+                try std.fs.cwd().deleteFile("b3t.toml");
+                return;
+            },
+            else => |e| {
+                std.debug.print("Error reading template: {}\n", .{e});
+                return e;
+            },
+        };
+        defer allocator.free(template_file);
+
+        try file.writeAll(template_file);
+
+        defer allocator.free(template_file);
     } else {
         std.debug.print("Using default template\n", .{});
-        const default_template: []const u8 = try utils.read_config(allocator, try std.fmt.allocPrint(allocator, "{s}/default.toml", .{templates_path}));
+
+        const default_path: []const u8 = try std.fmt.allocPrint(
+            allocator,
+            "{s}/default.toml",
+            .{templates_path},
+        );
+
+        const default_template: []const u8 = try utils.read_config(allocator, default_path);
+        // trying to write default_tepmplate to b3t.toml
         try file.writeAll(default_template);
+
         defer allocator.free(default_template);
+        defer allocator.free(default_path);
         // TODO: Use default template
     }
 
