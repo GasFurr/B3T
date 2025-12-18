@@ -27,7 +27,7 @@ pub const Template = struct {
         // name = ["...", "..."]
         name: ?[][]const u8,
         // level = [1, 2, 3, ...]
-        level: ?[]u32,
+        level: ?[]i64,
         // flag = "..."
         flag: ?[]const u8,
     },

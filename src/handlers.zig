@@ -1,6 +1,7 @@
 const std = @import("std");
 const microwave = @import("microwave");
 const utils = @import("utils.zig");
+const models = @import("models.zig");
 
 // Easiest command - init.
 pub fn init_handler(name: []const u8, template: ?[]const u8) !void {
@@ -84,6 +85,35 @@ pub fn init_handler(name: []const u8, template: ?[]const u8) !void {
         defer allocator.free(default_path);
         // TODO: Use default template
     }
+
+    // TODO change project name in b3t.toml.
+    // so, parse it, change value of it, repopulate?
+    // i really don't know how to use microwave.
+    // time to read docs.
+
+    const project_path: []const u8 = try std.fmt.allocPrint(allocator, "{s}/b3t.toml", .{cwd});
+    defer allocator.free(project_path);
+
+    const project_data: []const u8 = try utils.read_config(allocator, project_path);
+    defer allocator.free(project_data);
+    const project_toml = try microwave.parseFromSlice(allocator, project_data);
+    defer project_toml.deinit();
+
+    var project_struct: models.Template = undefined;
+    var arena = try microwave.Populate(models.Template).intoFromTable(
+        allocator,
+        &project_struct,
+        project_toml.table,
+    );
+    defer arena.deinit();
+
+    // OH FUCK, now it all makes sense!
+    // New algorithm:
+    // 1. Parse the template
+    // 2. Change values we need to change
+    // 3. Create file
+    // 4. Write table into it using microwave.stringify.write()
+    // well, this shit needs a full fucking rewrite.
 
     // TODO: add resulted path into data/index.toml
 
