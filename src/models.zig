@@ -18,7 +18,7 @@ pub const Template = struct {
         // name = "..."
         name: []const u8,
         // ignore = ["...", "..."]
-        ignore: ?[][]const u8, //optional.
+        ignore: ?[]const []const u8, //optional.
         // parse = "..."
         parse: []const u8,
     },

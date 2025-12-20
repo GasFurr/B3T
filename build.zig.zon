@@ -6,8 +6,8 @@
 
     .dependencies = .{
         .microwave = .{
-            .url = "git+https://github.com/edqx/microwave#4778e06fd10a5904af2e4a2d4353632217f6f70d",
-            .hash = "microwave-1.0.0-e4c5GVysAQC-_MjKS3hrzc9Yu91Q1yAvojsLARZL48Fx",
+            .url = "git+https://github.com/gasfurr/microwave#eae7789bb001e35ae1615ec64b94ad7900c9ae9b",
+            .hash = "microwave-1.0.0-e4c5Ga2fAQCib0kIaaSMGAWRp-QgkovYwsLe6a_QV2TH",
         },
         .clap = .{
             .url = "git+https://github.com/Hejsil/zig-clap#3ae92228409d82a2c906fafc228b7920d9ff046b",

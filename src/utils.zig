@@ -43,9 +43,7 @@ pub fn resolve_home(allocator: std.mem.Allocator, suffix: []const u8) ![]const u
     return std.fs.path.join(allocator, &[_][]const u8{ home_dir, suffix });
 }
 
-// Fixed!
-
-pub fn read_config(allocator: std.mem.Allocator, path: []const u8) ![]u8 {
+pub fn read_file(allocator: std.mem.Allocator, path: []const u8) ![]u8 {
     var file = try std.fs.cwd().openFile(path, .{ .mode = .read_only });
     defer file.close();
 
@@ -64,26 +62,4 @@ pub fn read_config(allocator: std.mem.Allocator, path: []const u8) ![]u8 {
     try file_reader.interface.fill(file_size);
 
     return content;
-}
-
-pub fn read_index(allocator: std.mem.Allocator, path: []const u8) ![]u8 {
-    var file = try std.fs.cwd().openFile(path, .{ .mode = .read_only });
-    defer file.close();
-
-    var threaded: std.Io.Threaded = .init_single_threaded;
-    const io = threaded.io();
-
-    var read_buf: [4096]u8 = undefined;
-    var f_reader = file.reader(io, &read_buf);
-
-    // Using the modern Allocating writer
-    var list = std.Io.Writer.Allocating.init(allocator);
-    errdefer list.deinit();
-
-    _ = try f_reader.interface.streamRemaining(&list.writer);
-
-    // Return the slice. Because it's from an Arena,
-    // we don't need to return the 'list' object itself,
-    // just the bytes.
-    return list.written();
 }

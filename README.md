@@ -143,6 +143,8 @@ A: To stay minimal. Pipe `b3t list` to other tools if needed.
 B3T is licensed under the [MIT License](LICENSE). You are free to use, modify, and distribute this code. Please include appropriate attribution (e.g., "© GasFurr") as per the license terms.
 
 This project uses [microwave](https://github.com/edqx/microwave) ([MIT License](https://github.com/edqx/microwave/blob/main/LICENSE)) for TOML parsing.
+Huge respect to original maintainer. Right now project project is using my own [patched fork](https://github.com/gasfurr/microwave).
+I just needed Optionals fr, and didn't want to change the library i'm using.
 
 <div align="center">
 

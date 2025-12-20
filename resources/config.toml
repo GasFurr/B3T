@@ -1,5 +1,5 @@
 #Environment configuration.
-[[env]]
+[env]
 #Default skin
 skin = "default"
 #Default template
