@@ -18,6 +18,7 @@ pub fn init_handler(name: []const u8, template: ?[]const u8) !void {
 
     // current working directory;
     const cwd = try std.fs.cwd().realpathAlloc(arena, ".");
+    const data_dir = try utils.data_dir(arena);
 
     // Forming path to template.
     const template_name = template orelse "default";
@@ -54,7 +55,6 @@ pub fn init_handler(name: []const u8, template: ?[]const u8) !void {
     // indexation logic.
     // creating indexation name using project name.
     const index_name = try std.fmt.allocPrint(arena, "{s}.toml", .{name});
-    const data_dir = try utils.resolve_home(arena, "/.config/b3t/data/");
     const index_path = try std.fmt.allocPrint(arena, "{s}{s}", .{ data_dir, index_name });
 
     // creating file...
@@ -105,6 +105,9 @@ pub fn init_handler(name: []const u8, template: ?[]const u8) !void {
 
     try file_stringify.write(project_struct);
 
+    // and don't forget to flush.
+    try file_writer_interface.flush();
+
     // indexation logic
 
     var index_writer = index.writer(&write_buffer);
@@ -127,7 +130,6 @@ pub fn init_handler(name: []const u8, template: ?[]const u8) !void {
     try index_stringify.write(index_struct);
 
     // and don't forget to flush.
-    try file_writer_interface.flush();
     try index_writer_interface.flush();
 
     // That's it.
@@ -192,4 +194,80 @@ pub fn delete_handler(arg: []const u8) !void {
 // Projects list
 pub fn projects_handler() !void {
     // Projects list
+}
+
+pub fn index_handler() !void {
+    // Setting up GPA as debug allocator;
+    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    defer _ = gpa.deinit();
+    const allocator = gpa.allocator();
+
+    // Setting up arena allocator for the function
+    // there's just too much microoperations inside this function anyway.
+    var arena_allocator = std.heap.ArenaAllocator.init(std.heap.page_allocator);
+    defer arena_allocator.deinit();
+    const arena = arena_allocator.allocator();
+
+    const data_dir = try utils.data_dir(arena);
+
+    // Getting b3t.toml path.
+    const config_path = try std.fs.cwd().realpathAlloc(arena, "b3t.toml");
+
+    // Reading b3t.toml configuration.
+    const config_data = try utils.read_file(arena, config_path);
+
+    // Forming path to template.
+    const project_doc = try microwave.parseFromSlice(allocator, config_data);
+    defer project_doc.deinit();
+
+    // Filling the structure (arena for lifetime control)
+    var project_struct: models.Template = undefined;
+    var struct_arena = try microwave.Populate(models.Template).intoFromTable(
+        allocator,
+        &project_struct,
+        project_doc.table,
+    );
+    defer struct_arena.deinit();
+
+    // getting project name from parsed b3t.toml configuration
+    const project_name = project_struct.project.name;
+    const index_path = try std.fmt.allocPrint(arena, "{s}/{s}.toml", .{ data_dir, project_name });
+
+    var index_struct: models.Data = undefined;
+    index_struct.path = config_path; // Indexing project path;
+
+    // I/O logic
+
+    // creating file or rewriting it if it already exists.
+    const file = try std.fs.createFileAbsolute(index_path, .{ .truncate = true });
+    defer file.close();
+
+    // R/W logic
+
+    var write_buffer: [4096]u8 = undefined;
+
+    var writer = file.writer(&write_buffer);
+
+    const writer_interface = &writer.interface;
+
+    var write_stream: microwave.WriteStream = .{
+        .allocator = allocator,
+        .writer = writer_interface,
+    };
+    defer write_stream.deinit();
+
+    var stringify: microwave.Stringify = .{
+        .key_allocator = allocator,
+        .stream = &write_stream,
+    };
+    defer stringify.deinit();
+
+    // writing index structure;
+    try stringify.write(index_struct);
+
+    // and don't forget to flush.
+    try writer_interface.flush();
+
+    // That's it.
+    std.debug.print("Project '{s}' indexed successfully.\n", .{project_name});
 }

@@ -27,7 +27,7 @@ pub fn main() !void {
         \\-d, --delete <str>     delete the project.
         \\-t, --template <str>   combined with -i changes the template of b3t.toml
         \\-p, --projects         list of all projects.
-        \\-i, --index            create/change a project indexation.
+        \\-I, --index            create/change a project indexation.
     );
 
     // Not necessary, but some useful errors:
@@ -69,5 +69,5 @@ pub fn main() !void {
     if (res.args.projects != 0)
         try handler.projects_handler();
     if (res.args.index != 0)
-        try handler.index_project();
+        try handler.index_handler();
 }
