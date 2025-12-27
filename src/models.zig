@@ -33,6 +33,12 @@ pub const Template = struct {
     },
 };
 
+// Project index. Yeah, that's it.
+pub const Data = struct {
+    // path = "..."
+    path: []const u8,
+};
+
 // Biggest one
 // Visual model (skin)
 pub const Skin = struct {

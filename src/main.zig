@@ -20,13 +20,14 @@ pub fn main() !void {
 
     // I have to use standard format.
     const params = comptime clap.parseParamsComptime(
-        \\-h, --help           display this text and exit.
-        \\-i, --init <str>     create new b3t project.
-        \\-s, --scan           scan the project.
-        \\-l, --list <str>     show todo list. Show config if "-l config".
-        \\-d, --delete <str>   delete the project.
-        \\-t,  --template <str> combined with -i changes the template of b3t.toml
-        \\
+        \\-h, --help             display this text and exit.
+        \\-i, --init <str>       create new b3t project.
+        \\-s, --scan             scan the project.
+        \\-l, --list <str>       show todo list.
+        \\-d, --delete <str>     delete the project.
+        \\-t, --template <str>   combined with -i changes the template of b3t.toml
+        \\-p, --projects         list of all projects.
+        \\-i, --index            create/change a project indexation.
     );
 
     // Not necessary, but some useful errors:
@@ -65,4 +66,8 @@ pub fn main() !void {
             std.debug.print("Template without init: {s}\n", .{s});
         }
     }
+    if (res.args.projects != 0)
+        try handler.projects_handler();
+    if (res.args.index != 0)
+        try handler.index_project();
 }
